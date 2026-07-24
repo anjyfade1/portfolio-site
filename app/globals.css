@@ -1,16 +1,83 @@
 @import "tailwindcss";
 
 /* ============================================================
-   GLOBAL STYLES — Anjy Portfolio
+   TAILWIND V4 THEME — Anjy Portfolio Design Tokens
    ============================================================ */
+@theme {
+  /* --- Colors --- */
+  --color-ink-950: #0f0d0b;
+  --color-ink-900: #1a1714;
+  --color-ink-800: #242019;
+  --color-ink-700: #2d2924;
+  --color-ink-600: #3a342d;
+  --color-ink-500: #5a4f44;
+  --color-ink-400: #7a6f62;
+  --color-ink-300: #b8ad9e;
+  --color-ink-200: #d8d0c4;
+  --color-ink-100: #f0ebe3;
+  --color-ink-50: #faf8f4;
 
-/* --- Font Variables --- */
+  --color-ember-600: #c44e1c;
+  --color-ember-500: #e8622a;
+  --color-ember-400: #f07040;
+  --color-ember-300: #f59070;
+
+  --color-violet-600: #6354e0;
+  --color-violet-500: #7c6af7;
+  --color-violet-400: #9b8cf9;
+
+  --color-jade-500: #22c55e;
+  --color-jade-400: #4ade80;
+
+  /* --- Fonts --- */
+  --font-display: "Syne", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* --- Custom spacing --- */
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-30: 7.5rem;
+
+  /* --- Animations --- */
+  --animate-fade-up: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  --animate-fade-in: fadeIn 0.4s ease forwards;
+  --animate-blink: blink 1.2s step-end infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-marquee: marquee 35s linear infinite;
+  --animate-spin-slow: spin 20s linear infinite;
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+}
+
+/* ============================================================
+   CSS CUSTOM PROPERTIES — Light / Dark Semantic Tokens
+   ============================================================ */
 :root {
-  --font-syne: "Syne", sans-serif;
   --font-inter: "Inter", sans-serif;
+  --font-syne: "Syne", sans-serif;
   --font-jetbrains: "JetBrains Mono", monospace;
 
-  /* Light mode tokens */
+  /* Light mode */
   --bg: #faf8f4;
   --bg-subtle: #f2ede6;
   --surface: #ffffff;
@@ -20,7 +87,7 @@
   --text-muted: #9a8f84;
   --accent: #e8622a;
   --accent-hover: #c44e1c;
-  --accent-muted: rgba(232, 98, 42, 0.1);
+  --accent-muted: rgba(232, 98, 42, 0.08);
 }
 
 .dark {
@@ -36,14 +103,16 @@
   --accent-muted: rgba(232, 98, 42, 0.12);
 }
 
-/* --- Base Reset --- */
-*,
+/* ============================================================
+   BASE RESET & GLOBAL STYLES
+   ============================================================ */
+/* *,
 *::before,
 *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+} */
 
 html {
   scroll-behavior: smooth;
@@ -59,102 +128,39 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- Selection --- */
 ::selection {
-  background-color: var(--accent);
+  background-color: #e8622a;
   color: #fff;
 }
 
-/* --- Focus styles --- */
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid #e8622a;
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-/* --- Scrollbar --- */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
-}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
-/* --- Typography Utilities --- */
-.font-display {
-  font-family: var(--font-syne);
-}
-.font-mono {
-  font-family: var(--font-jetbrains);
-}
-
-/* --- Animation utilities --- */
-.animate-delay-100 { animation-delay: 100ms; }
-.animate-delay-200 { animation-delay: 200ms; }
-.animate-delay-300 { animation-delay: 300ms; }
-.animate-delay-400 { animation-delay: 400ms; }
-.animate-delay-500 { animation-delay: 500ms; }
-.animate-delay-600 { animation-delay: 600ms; }
-.animate-delay-700 { animation-delay: 700ms; }
-.animate-delay-800 { animation-delay: 800ms; }
-
-.animate-fade-up {
-  opacity: 0;
-  animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.animate-fade-in {
-  opacity: 0;
-  animation: fadeIn 0.5s ease forwards;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-10px); }
-}
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
-}
-
-/* --- Reduce motion --- */
+/* ============================================================
+   REDUCE MOTION
+   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  html {
-    scroll-behavior: auto;
-  }
+  html { scroll-behavior: auto; }
 }
 
-/* --- Gradient text --- */
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+/* Gradient text */
 .text-gradient {
   background: linear-gradient(135deg, #e8622a 0%, #f07040 60%, #fbbf24 100%);
   -webkit-background-clip: text;
@@ -162,31 +168,16 @@ body {
   background-clip: text;
 }
 
-/* --- Noise texture overlay (subtle) --- */
-.noise-bg::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 1000;
-  opacity: 0.4;
-}
-
-/* --- Section spacing --- */
+/* Section spacing */
 .section-pad {
   padding-top: 6rem;
   padding-bottom: 6rem;
 }
-
 @media (min-width: 768px) {
-  .section-pad {
-    padding-top: 8rem;
-    padding-bottom: 8rem;
-  }
+  .section-pad { padding-top: 8rem; padding-bottom: 8rem; }
 }
 
-/* --- Grid container --- */
+/* Centered max-width container */
 .container-grid {
   max-width: 1200px;
   margin-left: auto;
@@ -194,15 +185,11 @@ body {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
-
 @media (min-width: 768px) {
-  .container-grid {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
+  .container-grid { padding-left: 2rem; padding-right: 2rem; }
 }
 
-/* --- Tag chip --- */
+/* Tech tag */
 .tech-tag {
   display: inline-flex;
   align-items: center;
@@ -212,43 +199,38 @@ body {
   font-family: var(--font-jetbrains);
   letter-spacing: 0.02em;
   background-color: var(--accent-muted);
-  color: var(--accent);
+  color: #e8622a;
   border: 1px solid rgba(232, 98, 42, 0.2);
   transition: all 0.15s ease;
 }
-
 .tech-tag:hover {
-  background-color: var(--accent);
+  background-color: #e8622a;
   color: #fff;
 }
 
-/* --- Card base --- */
+/* Card */
 .card {
   background-color: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
   transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
-
 .card:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  border-color: rgba(232, 98, 42, 0.4);
 }
 
-/* --- Divider line --- */
+/* Ruled divider */
 .ruled-line {
   width: 100%;
   height: 1px;
   background: var(--border);
 }
 
-/* --- Underline link animation --- */
+/* Underline link */
 .link-underline {
   position: relative;
   text-decoration: none;
 }
-
 .link-underline::after {
   content: "";
   position: absolute;
@@ -256,10 +238,18 @@ body {
   left: 0;
   width: 0;
   height: 1px;
-  background-color: var(--accent);
+  background-color: #e8622a;
   transition: width 0.25s ease;
 }
+.link-underline:hover::after { width: 100%; }
 
-.link-underline:hover::after {
-  width: 100%;
+/* Shadow utilities */
+.shadow-ember-glow {
+  box-shadow: 0 0 32px rgba(232, 98, 42, 0.25);
+}
+
+/* 2xs text size */
+.text-2xs {
+  font-size: 0.625rem;
+  line-height: 1rem;
 }

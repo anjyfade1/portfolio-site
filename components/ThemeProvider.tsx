@@ -22,8 +22,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (saved) {
       setTheme(saved);
     } else {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setTheme(prefersDark ? "dark" : "light");
+      // Default to dark — portfolio is designed dark-first
+      // Uncomment the line below to respect system preference instead:
+      // const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      // setTheme(prefersDark ? "dark" : "light");
+      setTheme("dark");
     }
   }, []);
 
