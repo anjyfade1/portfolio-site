@@ -1,158 +1,223 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { projects } from "@/data/portfolio";
-import { useInView } from "@/hooks/useInView";
+import Image from "next/image";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { projects, type CaseStudy } from "@/data/portfolio";
 
-function ProjectCard({
-  project,
-  index,
-}: {
-  project: (typeof projects)[0];
-  index: number;
-}) {
-  const { ref, inView } = useInView();
+const easeCurve = [0.22, 1, 0.36, 1] as const;
+
+function FeaturedMediaPosterCard({ project }: { project: CaseStudy }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  const isActive = isHovered || isFocused;
+
+  // Staggered Layer Animation Variants
+  const containerVariants: Variants = {
+    initial: {},
+    hover: {},
+  };
+
+  const imageVariants: Variants = {
+    initial: { scale: 1 },
+    hover: {
+      scale: prefersReducedMotion ? 1 : 1.05,
+      transition: { duration: 0.6, ease: easeCurve },
+    },
+  };
+
+  const overlayVariants: Variants = {
+    initial: { opacity: 0 },
+    hover: {
+      opacity: 1,
+      transition: { duration: 0.4, ease: easeCurve },
+    },
+  };
+
+  // Single Title Variant: rests at lower position unhovered, moves up when active
+  const titleVariants: Variants = {
+    initial: { y: prefersReducedMotion ? 0 : 36 },
+    hover: {
+      y: 0,
+      transition: { duration: 0.4, ease: easeCurve, delay: 0.02 },
+    },
+  };
+
+  const metaVariants: Variants = {
+    initial: { y: prefersReducedMotion ? 0 : 20, opacity: prefersReducedMotion ? 1 : 0 },
+    hover: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.4, ease: easeCurve, delay: 0.08 },
+    },
+  };
+
+  const stackVariants: Variants = {
+    initial: { y: prefersReducedMotion ? 0 : 16, opacity: prefersReducedMotion ? 1 : 0 },
+    hover: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.4, ease: easeCurve, delay: 0.14 },
+    },
+  };
+
+  const ctaVariants: Variants = {
+    initial: { y: prefersReducedMotion ? 0 : 12, opacity: prefersReducedMotion ? 1 : 0 },
+    hover: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.4, ease: easeCurve, delay: 0.2 },
+    },
+  };
+
+  const displayStack = project.stack.slice(0, 3).join(" • ");
 
   return (
-    <article
-      ref={ref as React.RefObject<HTMLElement>}
-      className="group relative"
-      style={{
-        opacity: inView ? 1 : 0,
-        transform: inView ? "translateY(0)" : "translateY(32px)",
-        transition: `opacity 0.6s cubic-bezier(0.22,1,0.36,1) ${index * 120}ms, transform 0.6s cubic-bezier(0.22,1,0.36,1) ${index * 120}ms`,
-      }}
+    <motion.article
+      initial="initial"
+      animate={isActive ? "hover" : "initial"}
+      variants={containerVariants}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
+      className="group relative rounded-2xl border border-[var(--hairline)] bg-[var(--bg-subtle)] overflow-hidden transition-colors duration-300 hover:border-[var(--accent)]/70 focus-within:border-[var(--accent)]/70 focus-within:ring-2 focus-within:ring-[var(--accent)]/40"
     >
-      <Link href={`/work/${project.slug}`} className="block h-full focus-visible:outline-none">
-        <div className="card h-full p-8 lg:p-10 relative overflow-hidden cursor-pointer group-hover:border-opacity-100">
-          {/* Accent top bar */}
-          <div
-            className="absolute top-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ backgroundColor: project.color }}
-            aria-hidden="true"
+      <Link
+        href={`/work/${project.slug}`}
+        className="block relative w-full aspect-[16/10] outline-none"
+        aria-label={`Open Case File for ${project.title}`}
+      >
+        {/* Hero Screenshot Image */}
+        <motion.div className="relative w-full h-full overflow-hidden" variants={imageVariants}>
+          <Image
+            src={project.posterImage}
+            alt={`${project.title} screenshot`}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover object-top select-none"
+            priority={project.featured}
           />
+        </motion.div>
 
-          {/* Header row */}
-          <div className="flex items-start justify-between gap-4 mb-6">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-mono text-[var(--text-muted)]">{project.year}</span>
-                <span className="w-1 h-1 rounded-full bg-[var(--border)]" aria-hidden="true" />
-                <span className="text-xs font-mono" style={{ color: project.color }}>{project.role}</span>
-              </div>
-              <h3 className="font-display font-bold text-xl text-[var(--text-primary)] group-hover:text-ember-500 transition-colors duration-200">
-                {project.title}
-              </h3>
-            </div>
-            {/* Arrow icon */}
-            <div className="mt-1 w-8 h-8 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--text-muted)] group-hover:border-ember-500 group-hover:text-ember-500 group-hover:scale-110 transition-all duration-200 shrink-0">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
-              </svg>
-            </div>
-          </div>
+        {/* Ambient Dark Backdrop (Always visible for contrast) */}
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-[#0d0c0b]/90 via-[#0d0c0b]/30 to-transparent pointer-events-none"
+          aria-hidden="true"
+        />
 
-          {/* Tagline */}
-          <p className="text-[var(--text-secondary)] text-sm leading-relaxed mb-6">
-            {project.tagline}
-          </p>
+        {/* Translucent Dark Gradient Overlay (Intensified on Hover/Focus) */}
+        <motion.div
+          variants={overlayVariants}
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-t from-[#0d0c0b]/98 via-[#0d0c0b]/85 to-[#0d0c0b]/25 pointer-events-none"
+        />
 
-          {/* Highlights */}
-          {project.highlights && (
-            <ul className="space-y-2 mb-6">
-              {project.highlights.slice(0, 3).map((h) => (
-                <li key={h} className="flex items-start gap-2 text-sm text-[var(--text-muted)]">
-                  <span className="mt-1.5 w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: project.color }} aria-hidden="true" />
-                  {h}
-                </li>
-              ))}
-            </ul>
-          )}
+        {/* Single Content Container */}
+        <div className="absolute inset-0 p-6 flex flex-col justify-end pointer-events-none">
+          {/* SINGLE Title — Moves smoothly on hover without duplicating */}
+          <motion.h3
+            variants={titleVariants}
+            className="font-display text-xl md:text-2xl font-bold tracking-tight text-white mb-2"
+          >
+            {project.title}
+          </motion.h3>
 
-          {/* Stack tags */}
-          <div className="flex flex-wrap gap-2 mt-auto">
-            {project.stack.slice(0, 4).map((tech) => (
-              <span key={tech} className="tech-tag">{tech}</span>
-            ))}
-            {project.stack.length > 4 && (
-              <span className="tech-tag">+{project.stack.length - 4}</span>
-            )}
-          </div>
+          {/* Product Category & Year */}
+          <motion.div
+            variants={metaVariants}
+            className="font-mono text-xs text-[var(--text-secondary)] font-medium mb-1.5 flex items-center gap-2"
+          >
+            <span>{project.productType}</span>
+            <span>•</span>
+            <span>{project.year}</span>
+          </motion.div>
+
+          {/* Tech Stack */}
+          <motion.p
+            variants={stackVariants}
+            className="font-mono text-2xs text-[var(--text-muted)] mb-4"
+          >
+            {displayStack}
+          </motion.p>
+
+          {/* Action CTA */}
+          <motion.div
+            variants={ctaVariants}
+            className="inline-flex items-center gap-2 font-mono text-xs font-semibold text-[var(--accent)] tracking-wider uppercase"
+          >
+            Open Case File
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </motion.div>
         </div>
       </Link>
-    </article>
+    </motion.article>
   );
 }
 
 export function FeaturedWorkSection() {
-  const { ref, inView } = useInView();
   const featured = projects.filter((p) => p.featured);
 
   return (
-    <section
-      id="work"
-      className="section-pad"
-      aria-labelledby="work-heading"
-    >
+    <section className="section-pad relative overflow-hidden" aria-label="Featured Work">
       <div className="container-grid">
-        {/* Section header */}
-        <div
-          ref={ref as React.RefObject<HTMLDivElement>}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14"
-          style={{
-            opacity: inView ? 1 : 0,
-            transform: inView ? "translateY(0)" : "translateY(24px)",
-            transition: "opacity 0.6s ease, transform 0.6s ease",
-          }}
-        >
-          <div>
-            <p className="text-xs font-mono text-ember-500 uppercase tracking-widest mb-3">
-              Selected Work
-            </p>
-            <h2
-              id="work-heading"
-              className="font-display font-bold text-[clamp(2rem,5vw,3.5rem)] text-[var(--text-primary)] leading-tight"
-            >
-              Things I&apos;ve
-              <br />
-              <span className="text-gradient">Shipped.</span>
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div className="max-w-2xl">
+            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--accent)] block mb-3">
+              03 · SHIPPED SYSTEMS
+            </span>
+            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight text-[var(--text-primary)]">
+              Products I&apos;ve Built
             </h2>
+            <p className="mt-4 text-base md:text-lg text-[var(--text-secondary)] leading-relaxed">
+              A selection of products and platforms I&apos;ve designed and shipped. Every project links to a detailed case study.
+            </p>
           </div>
+
           <Link
             href="/work"
-            className="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-ember-500 transition-colors duration-200 font-medium shrink-0 mb-2"
+            className="inline-flex items-center gap-2 font-mono text-xs font-semibold tracking-wider uppercase text-[var(--accent)] hover:text-[var(--accent-hover)] transition-colors duration-150 shrink-0 self-start md:self-end"
           >
-            All projects
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            View All Work
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
             </svg>
           </Link>
         </div>
 
-        {/* Project grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {featured.map((project, i) => (
-            <ProjectCard key={project.slug} project={project} index={i} />
+        {/* 3-Col Desktop / 2-Col Tablet / 1-Col Mobile Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+          {featured.map((project) => (
+            <FeaturedMediaPosterCard key={project.slug} project={project} />
           ))}
-        </div>
-
-        {/* TODO placeholder for future work */}
-        <div
-          className="mt-6 card p-8 border-dashed flex flex-col md:flex-row items-center justify-between gap-4"
-          aria-label="Upcoming project slot"
-        >
-          <div>
-            <p className="text-sm font-mono text-[var(--text-muted)] mb-1">Coming Soon</p>
-            <p className="text-[var(--text-secondary)] text-sm">
-              More projects with GitHub links, demos, and case studies are being added.
-            </p>
-          </div>
-          <Link
-            href="/contact"
-            className="shrink-0 text-sm text-ember-500 hover:underline font-medium"
-          >
-            Have a project in mind? →
-          </Link>
         </div>
       </div>
     </section>

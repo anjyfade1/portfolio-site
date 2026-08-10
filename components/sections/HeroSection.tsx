@@ -440,7 +440,9 @@ function TypewriterRole() {
 export function HeroSection() {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const letters = "AJ".split("");
 

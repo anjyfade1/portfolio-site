@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Syne, JetBrains_Mono } from "next/font/google";
+import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
+import { StatusBar } from "@/components/StatusBar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -11,11 +12,11 @@ const inter = Inter({
   display: "swap",
 });
 
-const syne = Syne({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-syne",
+  variable: "--font-space",
   display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["500", "600", "700"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -26,53 +27,50 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Anjolaoluwa Onifade — Frontend Developer",
+  title: "AJ — Frontend Developer · Anjolaoluwa Onifade",
   description:
-    "Frontend developer based in Lagos, Nigeria. I build fast, accessible, production-grade web experiences with React, Next.js, and TypeScript.",
+    "Frontend developer based in Lagos, Nigeria. I build modern web products for businesses — dashboards, client portals, ordering systems, and landing pages with React, TypeScript, Next.js, and Tailwind CSS.",
   keywords: [
+    "AJ",
     "Frontend Developer",
-    "React Developer",
-    "Next.js",
-    "TypeScript",
-    "Lagos Nigeria",
-    "Web Developer",
     "Anjolaoluwa Onifade",
+    "React",
+    "TypeScript",
+    "Next.js",
+    "Tailwind CSS",
+    "Dashboards",
+    "Client Portals",
+    "Web Products",
+    "Lagos Nigeria",
   ],
-  authors: [{ name: "Anjolaoluwa Onifade", url: "https://github.com/anjyfade1" }],
-  creator: "Anjolaoluwa Onifade",
+  authors: [{ name: "Anjolaoluwa Onifade (AJ)", url: "https://github.com/anjyfade1" }],
+  creator: "Anjolaoluwa Onifade (AJ)",
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Anjolaoluwa Onifade",
-    title: "Anjolaoluwa Onifade — Frontend Developer",
+    siteName: "AJ — Frontend Developer",
+    title: "AJ — Frontend Developer · Anjolaoluwa Onifade",
     description:
-      "Frontend developer based in Lagos, Nigeria. I build fast, accessible, production-grade web experiences.",
+      "Frontend developer building modern web products for businesses with React, TypeScript, and Next.js.",
     images: [
       {
-        url: "/og-image.png", // TODO: create /public/og-image.png (1200x630)
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Anjolaoluwa Onifade — Frontend Developer",
+        alt: "AJ — Frontend Developer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Anjolaoluwa Onifade — Frontend Developer",
+    title: "AJ — Frontend Developer · Anjolaoluwa Onifade",
     description:
-      "Frontend developer based in Lagos, Nigeria. Building fast, accessible web experiences.",
+      "Frontend developer building modern web products for businesses.",
     images: ["/og-image.png"],
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
   },
 };
 
@@ -85,19 +83,22 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${syne.variable} ${jetbrainsMono.variable}`}
+      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="font-body antialiased transition-colors duration-300">
+      <body className="font-body antialiased transition-colors duration-200">
         <ThemeProvider>
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[9999] px-4 py-2 bg-ember-500 text-white rounded-md font-semibold"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[9999] px-4 py-2 bg-[var(--accent)] text-white rounded font-mono text-xs font-medium"
           >
             Skip to content
           </a>
           <Nav />
-          <main id="main-content">{children}</main>
+          <main id="main-content" className="min-h-screen">
+            {children}
+          </main>
           <Footer />
+          <StatusBar />
         </ThemeProvider>
       </body>
     </html>

@@ -1,129 +1,233 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useState } from "react";
 import { personal } from "@/data/portfolio";
 
-export const metadata: Metadata = {
-  title: "Contact — Anjolaoluwa Onifade",
-  description: "Get in touch with Anjolaoluwa Onifade — frontend developer based in Lagos, Nigeria.",
-};
-
-const contactLinks = [
-  {
-    id: "contact-email",
-    label: "Email",
-    value: personal.email,
-    href: `mailto:${personal.email}`,
-    description: "Best for project inquiries and professional opportunities",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-        <polyline points="22,6 12,13 2,6"/>
-      </svg>
-    ),
-    external: false,
-  },
-  {
-    id: "contact-github",
-    label: "GitHub",
-    value: "anjyfade1",
-    href: personal.github,
-    description: "See my code, repos, and open source contributions",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943" />
-      </svg>
-    ),
-    external: true,
-  },
-  {
-    id: "contact-linkedin",
-    label: "LinkedIn",
-    value: "anjolaoluwa-onifade",
-    href: personal.linkedin,
-    description: "Connect professionally and see my full work history",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-      </svg>
-    ),
-    external: true,
-  },
-];
-
 export default function ContactPage() {
+  const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    projectType: "Dashboard / Portal",
+    details: "",
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "";
+
+    // If key isn't provided in env yet, fallback to launching mailto
+    if (!accessKey) {
+      window.location.href = `mailto:${personal.email}?subject=Build Mission Inquiry from ${encodeURIComponent(
+        formData.name
+      )} (${formData.projectType})&body=${encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\nProject Type: ${formData.projectType}\n\nDetails:\n${formData.details}`
+      )}`;
+      setIsSubmitting(false);
+      setSubmitted(true);
+      return;
+    }
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formData.name,
+          email: formData.email,
+          subject: `Build Mission Inquiry: ${formData.projectType} from ${formData.name}`,
+          product_type: formData.projectType,
+          message: formData.details,
+          from_name: "AJ Portfolio Contact Form",
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitted(true);
+      } else {
+        setErrorMessage(data.message || "Unable to send message. Please email directly.");
+      }
+    } catch {
+      setErrorMessage("Network connection error. You can click below to open your email client directly.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <div className="pt-28 pb-24">
-      <div className="container-grid max-w-4xl">
+    <div className="pt-32 pb-24">
+      <div className="container-grid max-w-3xl">
         {/* Header */}
-        <div className="mb-16 max-w-2xl">
-          <p className="text-xs font-mono text-ember-500 uppercase tracking-widest mb-4">Contact</p>
-          <h1 className="font-display font-extrabold text-[clamp(2.5rem,7vw,5rem)] text-[var(--text-primary)] leading-tight mb-6">
-            Let&apos;s Build
-            <br />
-            <span className="text-gradient">Something.</span>
+        <div className="mb-12 text-center">
+          <h1 className="font-display font-extrabold text-4xl md:text-5xl text-[var(--text-primary)] mb-4">
+            Let&apos;s Build Something.
           </h1>
-          <p className="text-[var(--text-secondary)] text-lg leading-relaxed">
-            I&apos;m open to new opportunities — full-time remote roles, freelance projects, or
-            just a good conversation about frontend engineering. If you have something worth
-            building, I&apos;d love to hear about it.
+          <p className="text-base md:text-lg text-[var(--text-secondary)] leading-relaxed">
+            Have an idea, a product, or a problem to solve? I'd love to hear about it and see how we can build it together.
           </p>
         </div>
 
-        {/* Contact links */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
-          {contactLinks.map(({ id, label, value, href, description, icon, external }) => (
-            <a
-              key={id}
-              id={id}
-              href={href}
-              target={external ? "_blank" : undefined}
-              rel={external ? "noopener noreferrer" : undefined}
-              className="card p-6 group hover:border-ember-500/50 transition-all duration-200 hover:-translate-y-1"
-            >
-              <div className="w-10 h-10 rounded-xl bg-ember-500/10 border border-ember-500/20 flex items-center justify-center text-ember-500 mb-4 group-hover:bg-ember-500 group-hover:text-white transition-all duration-200" aria-hidden="true">
-                {icon}
+        {/* Contact Form & Direct Email */}
+        <div className="solid-panel p-8 md:p-12">
+          {submitted ? (
+            <div className="text-center py-8 space-y-4">
+              <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 flex items-center justify-center mx-auto text-xl font-mono">
+                ✓
               </div>
-              <p className="font-display font-bold text-[var(--text-primary)] mb-0.5 group-hover:text-ember-500 transition-colors duration-200">
-                {label}
-              </p>
-              <p className="text-sm font-mono text-[var(--text-muted)] mb-2 truncate">{value}</p>
-              <p className="text-xs text-[var(--text-secondary)]">{description}</p>
-            </a>
-          ))}
-        </div>
-
-        {/* Mailto fallback form note */}
-        <div className="card p-8 md:p-10 border-dashed">
-          <div className="flex items-start gap-4">
-            <div className="w-8 h-8 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0 mt-0.5" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-500">
-                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-              </svg>
-            </div>
-            <div>
-              <p className="font-semibold text-[var(--text-primary)] mb-1">No contact form?</p>
-              <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                This portfolio is a static site — there&apos;s no backend to process form submissions.
-                The best way to reach me is directly via email at{" "}
-                <a
-                  href={`mailto:${personal.email}`}
-                  className="text-ember-500 hover:underline"
-                >
+              <h2 className="font-display font-bold text-2xl text-[var(--text-primary)]">
+                Mission Signal Received
+              </h2>
+              <p className="text-sm text-[var(--text-secondary)] max-w-md mx-auto leading-relaxed">
+                Thank you, <span className="text-[var(--text-primary)] font-semibold">{formData.name}</span>. Your message has been transmitted directly to{" "}
+                <a href={`mailto:${personal.email}`} className="text-[var(--accent)] underline">
                   {personal.email}
                 </a>
-                . If you&apos;d like a contact form added, it can be wired up using{" "}
-                <span className="font-mono text-[var(--text-muted)]">Resend</span>,{" "}
-                <span className="font-mono text-[var(--text-muted)]">Formspree</span>, or{" "}
-                <span className="font-mono text-[var(--text-muted)]">EmailJS</span>{" "}
-                — all static-friendly solutions.
+                . I&apos;ll get back to you shortly.
               </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setSubmitted(false);
+                  setFormData({ name: "", email: "", projectType: "Dashboard / Portal", details: "" });
+                }}
+                className="mt-4 px-6 py-2.5 solid-panel text-xs font-mono font-semibold uppercase tracking-wider text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+              >
+                Send Another Signal
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {errorMessage && (
+                <div className="p-4 bg-red-500/10 border border-red-500/20 rounded text-xs font-mono text-red-400 flex items-center justify-between">
+                  <span>{errorMessage}</span>
+                  <a
+                    href={`mailto:${personal.email}?subject=Inquiry from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.details)}`}
+                    className="underline text-[var(--accent)] shrink-0 ml-2"
+                  >
+                    Open Mail Client ↗
+                  </a>
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="name" className="block font-mono text-2xs uppercase text-[var(--text-secondary)] font-semibold mb-2">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="e.g. Sarah Connor"
+                    className="w-full p-3 bg-[var(--bg)] border border-[var(--hairline)] rounded text-sm text-[var(--text-primary)] focus:border-[var(--accent)] focus:outline-none font-body"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block font-mono text-2xs uppercase text-[var(--text-secondary)] font-semibold mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder="sarah@example.com"
+                    className="w-full p-3 bg-[var(--bg)] border border-[var(--hairline)] rounded text-sm text-[var(--text-primary)] focus:border-[var(--accent)] focus:outline-none font-body"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="projectType" className="block font-mono text-2xs uppercase text-[var(--text-secondary)] font-semibold mb-2">
+                  Product Type
+                </label>
+                <select
+                  id="projectType"
+                  value={formData.projectType}
+                  onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
+                  className="w-full p-3 bg-[var(--bg)] border border-[var(--hairline)] rounded text-sm text-[var(--text-primary)] focus:border-[var(--accent)] focus:outline-none font-body"
+                >
+                  <option value="Dashboard / Portal">Dashboard / Analytics System</option>
+                  <option value="Ordering / E-Commerce">Ordering System / E-Commerce Storefront</option>
+                  <option value="Client Portal">Client Portal / Admin System</option>
+                  <option value="Landing Page">High-Conversion Landing Page</option>
+                  <option value="Full Frontend Build">Full Frontend Application Build</option>
+                  <option value="Other">Other Collaboration</option>
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="details" className="block font-mono text-2xs uppercase text-[var(--text-secondary)] font-semibold mb-2">
+                  Project Details / Requirements
+                </label>
+                <textarea
+                  id="details"
+                  rows={5}
+                  required
+                  value={formData.details}
+                  onChange={(e) => setFormData({ ...formData, details: e.target.value })}
+                  placeholder="Tell me about the problem, timeline, tech stack, and goals..."
+                  className="w-full p-3 bg-[var(--bg)] border border-[var(--hairline)] rounded text-sm text-[var(--text-primary)] focus:border-[var(--accent)] focus:outline-none font-body"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full py-4 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white font-mono text-xs font-semibold uppercase tracking-wider rounded transition-all duration-150 shadow-sm disabled:opacity-50 flex items-center justify-center gap-2"
+              >
+                {isSubmitting ? (
+                  <>
+                    <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Transmitting Mission Signal...
+                  </>
+                ) : (
+                  "Send Message →"
+                )}
+              </button>
+            </form>
+          )}
+
+          {/* Direct Contact Alternative Box */}
+          <div className="mt-8 pt-8 border-t border-[var(--hairline)] text-center space-y-3">
+            <span className="font-mono text-2xs uppercase text-[var(--text-muted)] tracking-wider">
+              OR EMAIL DIRECTLY
+            </span>
+            <div>
+              <a
+                href={`mailto:${personal.email}`}
+                className="font-mono text-base font-bold text-[var(--accent)] hover:underline"
+              >
+                {personal.email}
+              </a>
+            </div>
+            <div className="flex items-center justify-center gap-6 pt-2 font-mono text-xs text-[var(--text-secondary)]">
+              <a href={personal.github} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent)]">
+                GitHub ↗
+              </a>
+              <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent)]">
+                LinkedIn ↗
+              </a>
             </div>
           </div>
-        </div>
-
-        {/* Availability note */}
-        <div className="mt-12 flex items-center gap-3 text-[var(--text-muted)] text-sm">
-          <span className="w-2 h-2 rounded-full bg-jade-500 animate-pulse" aria-hidden="true" />
-          <span>Currently available for new projects and full-time remote roles.</span>
         </div>
       </div>
     </div>
