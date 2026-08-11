@@ -27,9 +27,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AJ — Frontend Developer · Anjolaoluwa Onifade",
+  title: "AJ — Frontend Engineer",
   description:
-    "Frontend developer based in Lagos, Nigeria. I build modern web products for businesses — dashboards, client portals, ordering systems, and landing pages with React, TypeScript, Next.js, and Tailwind CSS.",
+    "Frontend engineer based in Lagos, Nigeria. I build modern web products for businesses — dashboards, client portals, ordering systems, and landing pages with React, TypeScript, Next.js, and Tailwind CSS.",
   keywords: [
     "AJ",
     "Frontend Developer",
