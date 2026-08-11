@@ -45,6 +45,14 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Anjolaoluwa Onifade (AJ)", url: "https://github.com/anjyfade1" }],
   creator: "Anjolaoluwa Onifade (AJ)",
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png" },
+      { url: "/favicon.png", type: "image/png" },
+    ],
+    shortcut: "/icon.png",
+    apple: "/apple-icon.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
