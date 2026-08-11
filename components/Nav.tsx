@@ -133,7 +133,7 @@ export function Nav() {
               <div className="flex items-center gap-3">
                 <button
                   type="button"
-                  onClick={toggleTheme}
+                  onClick={(e) => toggleTheme(e)}
                   aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
                   className="flex h-fit w-fit cursor-pointer items-center rounded-full p-1 transition-colors duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember-500/40"
                   style={{
