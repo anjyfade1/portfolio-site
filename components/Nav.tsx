@@ -30,31 +30,30 @@ export function Nav() {
     setMenuOpen(false);
   }, [pathname]);
 
-  const shellStyle = scrolled
-    ? {
-        maxWidth: "1120px",
-        margin: "12px auto 0",
-        borderRadius: "9999px",
-        border: isDark
-          ? "1px solid rgba(255,255,255,0.10)"
-          : "1px solid rgba(26,23,20,0.08)",
-        backgroundColor: isDark ? "rgba(20,17,14,0.72)" : "rgba(250,248,244,0.74)",
-        backdropFilter: "blur(20px) saturate(170%)",
-        WebkitBackdropFilter: "blur(20px) saturate(170%)",
-        boxShadow: isDark
-          ? "0 18px 40px rgba(0,0,0,0.22)"
-          : "0 18px 40px rgba(26,23,20,0.10)",
-      }
-    : {
-        maxWidth: "100%",
-        margin: "0 auto",
-        borderRadius: "0px",
-        border: "1px solid transparent",
-        backgroundColor: "transparent",
-        backdropFilter: "none",
-        WebkitBackdropFilter: "none",
-        boxShadow: "none",
-      };
+  const shellStyle = {
+    maxWidth: "1120px",
+    margin: scrolled ? "10px auto 0" : "16px auto 0",
+    borderRadius: "9999px",
+    border: isDark
+      ? "1px solid rgba(255,255,255,0.10)"
+      : "1px solid rgba(26,23,20,0.08)",
+    backgroundColor: isDark
+      ? scrolled
+        ? "rgba(18,17,16,0.82)"
+        : "rgba(20,17,14,0.72)"
+      : scrolled
+        ? "rgba(250,249,246,0.86)"
+        : "rgba(250,248,244,0.74)",
+    backdropFilter: "blur(20px) saturate(170%)",
+    WebkitBackdropFilter: "blur(20px) saturate(170%)",
+    boxShadow: isDark
+      ? scrolled
+        ? "0 20px 45px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.08)"
+        : "0 10px 30px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.05)"
+      : scrolled
+        ? "0 20px 45px rgba(26,23,20,0.12), inset 0 1px 0 rgba(255,255,255,0.8)"
+        : "0 10px 30px rgba(26,23,20,0.06), inset 0 1px 0 rgba(255,255,255,0.6)",
+  };
 
   return (
     <>
@@ -87,10 +86,10 @@ export function Nav() {
               "margin 0.4s ease, max-width 0.4s ease, border-radius 0.4s ease, background-color 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease",
           }}
         >
-          <div className="container-grid">
+          <div className="px-4 sm:px-6 md:px-8">
             <div
               className="flex items-center justify-between"
-              style={{ height: scrolled ? "64px" : "72px", transition: "height 0.3s ease" }}
+              style={{ height: scrolled ? "60px" : "66px", transition: "height 0.3s ease" }}
             >
               <Link
                 href="/"

@@ -184,7 +184,7 @@ const TECH_LOGOS = [
 ];
 
 const ROLES = [
-  "Frontend Developer",
+  "Frontend Engineer",
   "React Engineer",
   "TypeScript Specialist",
   "UI Performance Nerd",

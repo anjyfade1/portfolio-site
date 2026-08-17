@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
-import { StatusBar } from "@/components/StatusBar";
+import { SharedProjectTransitionProvider } from "@/components/SharedProjectTransition";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     "Frontend engineer based in Lagos, Nigeria. I build modern web products for businesses — dashboards, client portals, ordering systems, and landing pages with React, TypeScript, Next.js, and Tailwind CSS.",
   keywords: [
     "AJ",
-    "Frontend Developer",
+    "Frontend Engineer",
     "Anjolaoluwa Onifade",
     "React",
     "TypeScript",
@@ -56,24 +56,24 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "AJ — Frontend Developer",
-    title: "AJ — Frontend Developer · Anjolaoluwa Onifade",
+    siteName: "AJ — Frontend Engineer",
+    title: "AJ — Frontend Engineer · Anjolaoluwa Onifade",
     description:
-      "Frontend developer building modern web products for businesses with React, TypeScript, and Next.js.",
+      "Frontend engineer building modern web products for businesses with React, TypeScript, and Next.js.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "AJ — Frontend Developer",
+        alt: "AJ — Frontend Engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AJ — Frontend Developer · Anjolaoluwa Onifade",
+    title: "AJ — Frontend Engineer · Anjolaoluwa Onifade",
     description:
-      "Frontend developer building modern web products for businesses.",
+      "Frontend engineer building modern web products for businesses.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -95,18 +95,19 @@ export default function RootLayout({
     >
       <body className="font-body antialiased transition-colors duration-200">
         <ThemeProvider>
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[9999] px-4 py-2 bg-[var(--accent)] text-white rounded font-mono text-xs font-medium"
-          >
-            Skip to content
-          </a>
-          <Nav />
-          <main id="main-content" className="min-h-screen">
-            {children}
-          </main>
-          <Footer />
-          <StatusBar />
+          <SharedProjectTransitionProvider>
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[9999] px-4 py-2 bg-[var(--accent)] text-white rounded font-mono text-xs font-medium"
+            >
+              Skip to content
+            </a>
+            <Nav />
+            <main id="main-content" className="min-h-screen">
+              {children}
+            </main>
+            <Footer />
+          </SharedProjectTransitionProvider>
         </ThemeProvider>
       </body>
     </html>

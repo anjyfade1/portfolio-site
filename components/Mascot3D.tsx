@@ -166,9 +166,6 @@ export function Mascot3D({ size = 280 }: { size?: number }) {
             <span className="font-display font-bold text-lg text-[var(--text-primary)]">
               AJ MASCOT
             </span>
-            <span className="font-mono text-2xs uppercase tracking-widest text-[var(--accent)]">
-              [ 3D TACTILE · HOVER TO ROTATE ]
-            </span>
           </div>
         </div>
 

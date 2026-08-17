@@ -711,10 +711,10 @@ export const projects: CaseStudy[] = [
     title: "HOC — House of Creatives",
     tagline: "Media-rich creative agency platform connecting influencers, creators, and bold brands.",
     productType: "Creative Platform",
-    year: "2024",
+    year: "2025",
     role: "Frontend Developer",
     status: "Public Platform",
-    featured: false,
+    featured: true,
     color: "#E11D48",
     liveUrl: "https://hocagency.co.uk/",
     posterImage: "/images/projects/hoc/hero-landing.png",
@@ -874,7 +874,7 @@ export const projects: CaseStudy[] = [
 
 export const experience: ExperienceItem[] = [
   {
-    title: "Frontend Developer",
+    title: "Frontend Engineer",
     company: "Independent Contractor",
     location: "Remote",
     type: "Contract / Freelance",

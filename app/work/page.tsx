@@ -1,18 +1,41 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 import { projects, type CaseStudy } from "@/data/portfolio";
+import { useSharedTransition } from "@/components/SharedProjectTransition";
 
 const easeCurve = [0.22, 1, 0.36, 1] as const;
 
 function ProductShowcaseCard({ project }: { project: CaseStudy }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const { startTransition } = useSharedTransition();
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const isActive = isHovered || isFocused;
+
+  const handleCardClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (cardRef.current) {
+      const rect = cardRef.current.getBoundingClientRect();
+      startTransition(
+        {
+          slug: project.slug,
+          posterImage: project.posterImage,
+          title: project.title,
+          sourceRect: {
+            top: rect.top,
+            left: rect.left,
+            width: rect.width,
+            height: rect.height,
+          },
+        },
+        e
+      );
+    }
+  };
 
   const imageVariants: Variants = {
     initial: { scale: 1 },
@@ -50,6 +73,7 @@ function ProductShowcaseCard({ project }: { project: CaseStudy }) {
 
   return (
     <motion.article
+      ref={cardRef}
       initial="initial"
       animate={isActive ? "hover" : "initial"}
       onMouseEnter={() => setIsHovered(true)}
@@ -60,11 +84,16 @@ function ProductShowcaseCard({ project }: { project: CaseStudy }) {
     >
       <Link
         href={`/work/${project.slug}`}
+        onClick={handleCardClick}
         className="block relative w-full aspect-[4/3] outline-none"
         aria-label={`Open Case File for ${project.title}`}
       >
         {/* Cover Image */}
-        <motion.div className="relative w-full h-full overflow-hidden bg-[var(--bg)]" variants={imageVariants}>
+        <motion.div
+          className="relative w-full h-full overflow-hidden bg-[var(--bg)]"
+          style={{ viewTransitionName: `project-hero-${project.slug}` }}
+          variants={imageVariants}
+        >
           <Image
             src={project.posterImage}
             alt={`${project.title} cover`}

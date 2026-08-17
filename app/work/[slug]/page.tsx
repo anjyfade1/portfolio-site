@@ -4,6 +4,10 @@ import Image from "next/image";
 import { projects } from "@/data/portfolio";
 import { FeatureVideoPlayer } from "@/components/FeatureVideoPlayer";
 import { ScreenshotCarousel } from "@/components/ScreenshotCarousel";
+import {
+  CaseStudyHeroImage,
+  CaseStudyContentWrapper,
+} from "@/components/CaseStudyHero";
 
 export async function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -120,22 +124,18 @@ export default async function CaseStudyPage({
         )}
       </header>
 
-      {/* Main Cover Shot */}
+      {/* Main Cover Shot with Shared-Element Transition Support */}
       <section className="container-grid mb-16">
-        <div className="relative aspect-video w-full rounded-2xl border border-[var(--hairline)] overflow-hidden bg-[#0d0c0b] shadow-2xl">
-          <Image
-            src={project.posterImage}
-            alt={`${project.title} poster`}
-            fill
-            priority
-            sizes="(max-width: 1280px) 100vw, 1280px"
-            className="object-cover object-top"
-          />
-        </div>
+        <CaseStudyHeroImage
+          slug={project.slug}
+          posterImage={project.posterImage}
+          title={project.title}
+        />
       </section>
 
       {/* Grid Layout: Dynamic Index Sidebar + Content */}
-      <div className="container-grid grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-12 items-start">
+      <CaseStudyContentWrapper>
+        <div className="container-grid grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-12 items-start">
         {/* Dynamic Case-Study Index (Sidebar) */}
         <aside className="hidden lg:block sticky top-28 solid-panel p-5">
           <span className="font-mono text-2xs text-[var(--text-muted)] uppercase tracking-wider block mb-3 font-semibold">
@@ -731,6 +731,7 @@ export default async function CaseStudyPage({
           )}
         </div>
       </div>
+      </CaseStudyContentWrapper>
     </article>
   );
 }

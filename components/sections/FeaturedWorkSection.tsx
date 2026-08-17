@@ -1,19 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { projects, type CaseStudy } from "@/data/portfolio";
+import { useSharedTransition } from "@/components/SharedProjectTransition";
 
 const easeCurve = [0.22, 1, 0.36, 1] as const;
+
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollAnimations";
 
 function FeaturedMediaPosterCard({ project }: { project: CaseStudy }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+  const { startTransition } = useSharedTransition();
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const isActive = isHovered || isFocused;
+
+  const handleCardClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (cardRef.current) {
+      const rect = cardRef.current.getBoundingClientRect();
+      startTransition(
+        {
+          slug: project.slug,
+          posterImage: project.posterImage,
+          title: project.title,
+          sourceRect: {
+            top: rect.top,
+            left: rect.left,
+            width: rect.width,
+            height: rect.height,
+          },
+        },
+        e
+      );
+    }
+  };
 
   // Staggered Layer Animation Variants
   const containerVariants: Variants = {
@@ -77,6 +102,7 @@ function FeaturedMediaPosterCard({ project }: { project: CaseStudy }) {
 
   return (
     <motion.article
+      ref={cardRef}
       initial="initial"
       animate={isActive ? "hover" : "initial"}
       variants={containerVariants}
@@ -88,16 +114,21 @@ function FeaturedMediaPosterCard({ project }: { project: CaseStudy }) {
     >
       <Link
         href={`/work/${project.slug}`}
-        className="block relative w-full aspect-[16/10] outline-none"
+        onClick={handleCardClick}
+        className="block relative w-full aspect-[16/11] outline-none"
         aria-label={`Open Case File for ${project.title}`}
       >
         {/* Hero Screenshot Image */}
-        <motion.div className="relative w-full h-full overflow-hidden" variants={imageVariants}>
+        <motion.div
+          className="relative w-full h-full overflow-hidden"
+          style={{ viewTransitionName: `project-hero-${project.slug}` }}
+          variants={imageVariants}
+        >
           <Image
             src={project.posterImage}
             alt={`${project.title} screenshot`}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover object-top select-none"
             priority={project.featured}
           />
@@ -121,7 +152,7 @@ function FeaturedMediaPosterCard({ project }: { project: CaseStudy }) {
           {/* SINGLE Title — Moves smoothly on hover without duplicating */}
           <motion.h3
             variants={titleVariants}
-            className="font-display text-xl md:text-2xl font-bold tracking-tight text-white mb-2"
+            className="font-display text-2xl md:text-3xl font-bold tracking-tight text-white mb-2"
           >
             {project.title}
           </motion.h3>
@@ -129,7 +160,7 @@ function FeaturedMediaPosterCard({ project }: { project: CaseStudy }) {
           {/* Product Category & Year */}
           <motion.div
             variants={metaVariants}
-            className="font-mono text-xs text-[var(--text-secondary)] font-medium mb-1.5 flex items-center gap-2"
+            className="font-mono text-xs md:text-sm text-[var(--text-secondary)] font-medium mb-1.5 flex items-center gap-2"
           >
             <span>{project.productType}</span>
             <span>•</span>
@@ -179,47 +210,55 @@ export function FeaturedWorkSection() {
       <div className="container-grid">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div className="max-w-2xl">
-            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--accent)] block mb-3">
-              03 · SHIPPED SYSTEMS
-            </span>
-            <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight text-[var(--text-primary)]">
-              Products I&apos;ve Built
-            </h2>
-            <p className="mt-4 text-base md:text-lg text-[var(--text-secondary)] leading-relaxed">
-              A selection of products and platforms I&apos;ve designed and shipped. Every project links to a detailed case study.
-            </p>
-          </div>
+          <ScrollReveal direction="up" distance={40} duration={0.7}>
+            <div className="max-w-2xl">
+              <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight text-[var(--text-primary)]">
+                Products I&apos;ve Built
+              </h2>
+              <p className="mt-4 text-base md:text-lg text-[var(--text-secondary)] leading-relaxed">
+                A selection of products and platforms I&apos;ve designed and shipped. Every project links to a detailed case study.
+              </p>
+            </div>
+          </ScrollReveal>
 
-          <Link
-            href="/work"
-            className="inline-flex items-center gap-2 font-mono text-xs font-semibold tracking-wider uppercase text-[var(--accent)] hover:text-[var(--accent-hover)] transition-colors duration-150 shrink-0 self-start md:self-end"
-          >
-            View All Work
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
+          <ScrollReveal direction="up" distance={24} delay={0.15} duration={0.6}>
+            <Link
+              href="/work"
+              className="inline-flex items-center gap-2 font-mono text-xs font-semibold tracking-wider uppercase text-[var(--accent)] hover:text-[var(--accent-hover)] transition-colors duration-150 shrink-0 self-start md:self-end"
             >
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </Link>
+              View All Work
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </Link>
+          </ScrollReveal>
         </div>
 
-        {/* 3-Col Desktop / 2-Col Tablet / 1-Col Mobile Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+        {/* 2-Col Desktop / 1-Col Mobile Grid — Staggered Reveal */}
+        <StaggerContainer
+          stagger={0.12}
+          delay={0.1}
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10"
+        >
           {featured.map((project) => (
-            <FeaturedMediaPosterCard key={project.slug} project={project} />
+            <StaggerItem key={project.slug} direction="up" distance={44} duration={0.7}>
+              <FeaturedMediaPosterCard project={project} />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
 }
+

@@ -230,3 +230,41 @@ body {
 ::view-transition-new(root) {
   z-index: 9999;
 }
+
+/* ============================================================
+   SHARED ELEMENT PROJECT HERO TRANSITIONS
+   ============================================================ */
+::view-transition-group(project-hero-leads-profile),
+::view-transition-group(project-hero-easy-gas),
+::view-transition-group(project-hero-planned-rations),
+::view-transition-group(project-hero-tuyen-legacy-foundation),
+::view-transition-group(project-hero-banking-dashboard),
+::view-transition-group(project-hero-hoc-agency),
+::view-transition-group(project-hero-yourcreditpal) {
+  animation-duration: 0.55s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+::view-transition-old(project-hero-leads-profile),
+::view-transition-old(project-hero-easy-gas),
+::view-transition-old(project-hero-planned-rations),
+::view-transition-old(project-hero-tuyen-legacy-foundation),
+::view-transition-old(project-hero-banking-dashboard),
+::view-transition-old(project-hero-hoc-agency),
+::view-transition-old(project-hero-yourcreditpal),
+::view-transition-new(project-hero-leads-profile),
+::view-transition-new(project-hero-easy-gas),
+::view-transition-new(project-hero-planned-rations),
+::view-transition-new(project-hero-tuyen-legacy-foundation),
+::view-transition-new(project-hero-banking-dashboard),
+::view-transition-new(project-hero-hoc-agency),
+::view-transition-new(project-hero-yourcreditpal) {
+  animation: none;
+  mix-blend-mode: normal;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: top;
+}

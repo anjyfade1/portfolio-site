@@ -1,7 +1,64 @@
-import Link from "next/link";
+"use client";
+
+import { useEffect, useState } from "react";
 import { personal } from "@/data/portfolio";
 
 export function Footer() {
+  const [visitorInfo, setVisitorInfo] = useState<{
+    location: string;
+    time: string;
+    timeZoneCode: string;
+  }>({
+    location: "LOCAL",
+    time: "",
+    timeZoneCode: "",
+  });
+
+  useEffect(() => {
+    // Detect visitor's local timezone & city name
+    let detectedLocation = "LOCAL";
+    let detectedTzCode = "";
+
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (tz) {
+        const parts = tz.split("/");
+        const rawCity = parts[parts.length - 1] || tz;
+        detectedLocation = rawCity.replace(/_/g, " ").toUpperCase();
+      }
+
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZoneName: "short",
+      }).formatToParts(new Date());
+      const tzPart = parts.find((p) => p.type === "timeZoneName");
+      if (tzPart) {
+        detectedTzCode = tzPart.value;
+      }
+    } catch {
+      detectedLocation = "LOCAL";
+    }
+
+    const updateTime = () => {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString("en-US", {
+        hour12: false,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      });
+
+      setVisitorInfo({
+        location: detectedLocation,
+        time: timeStr,
+        timeZoneCode: detectedTzCode,
+      });
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <footer className="bg-[var(--bg-subtle)] border-t border-[var(--hairline)] py-12" role="contentinfo">
       <div className="container-grid flex flex-col md:flex-row items-center justify-between gap-6">
@@ -16,17 +73,9 @@ export function Footer() {
             </span>
           </div>
           <p className="text-xs text-[var(--text-secondary)]">
-            Frontend Developer · {personal.location}
+            Frontend Engineer · {personal.location}
           </p>
         </div>
-
-        {/* Middle Status Badge */}
-        {/* <div className="solid-panel px-3 py-1.5 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
-          <span className="font-mono text-2xs uppercase tracking-wider text-[var(--text-secondary)]">
-            {personal.statusBadge}
-          </span>
-        </div> */}
 
         {/* Right Links & Socials */}
         <div className="flex items-center gap-6">
@@ -60,10 +109,13 @@ export function Footer() {
 
       <div className="container-grid mt-8 pt-6 border-t border-[var(--hairline)] flex flex-col sm:flex-row items-center justify-between gap-4 text-2xs font-mono text-[var(--text-muted)]">
         <div>
-          © {new Date().getFullYear()}. All rights reserved.
+          © {new Date().getFullYear()} {personal.name}. All rights reserved.
         </div>
-        <div>
-          THE FRONTEND ARC
+        <div className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
+          <span className="text-[var(--text-secondary)]">
+            {visitorInfo.location} · {visitorInfo.time || "--:--:--"} {visitorInfo.timeZoneCode}
+          </span>
         </div>
       </div>
     </footer>
