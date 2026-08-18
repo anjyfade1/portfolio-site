@@ -64,65 +64,67 @@ export default async function CaseStudyPage({
   return (
     <article className="pt-32 pb-24">
       {/* 1. Header (Product Case File Header) */}
-      <header className="container-grid mb-12">
-        <div className="flex items-center gap-2 font-mono text-xs text-[var(--accent)] mb-4 uppercase tracking-wider font-semibold">
-          <Link href="/work" className="hover:underline">
-            CASE FILE
-          </Link>
-          <span>/</span>
-          <span>{project.productType}</span>
-        </div>
+      <CaseStudyContentWrapper>
+        <header className="container-grid mb-12">
+          <div className="flex items-center gap-2 font-mono text-xs text-[var(--accent)] mb-4 uppercase tracking-wider font-semibold">
+            <Link href="/work" className="hover:underline">
+              CASE FILE
+            </Link>
+            <span>/</span>
+            <span>{project.productType}</span>
+          </div>
 
-        <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[var(--text-primary)] mb-4 leading-tight">
-          {project.title}
-        </h1>
+          <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[var(--text-primary)] mb-4 leading-tight">
+            {project.title}
+          </h1>
 
-        <p className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-3xl mb-8 font-body">
-          {project.tagline}
-        </p>
+          <p className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-3xl mb-8 font-body">
+            {project.tagline}
+          </p>
 
-        {/* Metadata Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 rounded-xl border border-[var(--hairline)] bg-[var(--bg-subtle)] font-mono text-xs">
-          <div>
-            <span className="text-[var(--text-muted)] block text-2xs uppercase tracking-wider mb-1">
-              PRODUCT TYPE
-            </span>
-            <span className="text-[var(--text-primary)] font-semibold">{project.productType}</span>
+          {/* Metadata Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 rounded-xl border border-[var(--hairline)] bg-[var(--bg-subtle)] font-mono text-xs">
+            <div>
+              <span className="text-[var(--text-muted)] block text-2xs uppercase tracking-wider mb-1">
+                PRODUCT TYPE
+              </span>
+              <span className="text-[var(--text-primary)] font-semibold">{project.productType}</span>
+            </div>
+            <div>
+              <span className="text-[var(--text-muted)] block text-2xs uppercase tracking-wider mb-1">
+                YEAR
+              </span>
+              <span className="text-[var(--text-primary)] font-semibold">{project.year}</span>
+            </div>
+            <div>
+              <span className="text-[var(--text-muted)] block text-2xs uppercase tracking-wider mb-1">
+                ROLE
+              </span>
+              <span className="text-[var(--text-primary)] font-semibold">{project.role}</span>
+            </div>
+            <div>
+              <span className="text-[var(--text-muted)] block text-2xs uppercase tracking-wider mb-1">
+                STATUS
+              </span>
+              <span className="text-[var(--accent)] font-semibold">{project.status}</span>
+            </div>
           </div>
-          <div>
-            <span className="text-[var(--text-muted)] block text-2xs uppercase tracking-wider mb-1">
-              YEAR
-            </span>
-            <span className="text-[var(--text-primary)] font-semibold">{project.year}</span>
-          </div>
-          <div>
-            <span className="text-[var(--text-muted)] block text-2xs uppercase tracking-wider mb-1">
-              ROLE
-            </span>
-            <span className="text-[var(--text-primary)] font-semibold">{project.role}</span>
-          </div>
-          <div>
-            <span className="text-[var(--text-muted)] block text-2xs uppercase tracking-wider mb-1">
-              STATUS
-            </span>
-            <span className="text-[var(--accent)] font-semibold">{project.status}</span>
-          </div>
-        </div>
 
-        {/* Action CTAs */}
-        {project.liveUrl && (
-          <div className="flex flex-wrap gap-3 mt-6">
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wider bg-[var(--accent)] text-white rounded hover:opacity-90 transition-opacity"
-            >
-              View Website ↗
-            </a>
-          </div>
-        )}
-      </header>
+          {/* Action CTAs */}
+          {project.liveUrl && (
+            <div className="flex flex-wrap gap-3 mt-6">
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wider bg-[var(--accent)] text-white rounded hover:opacity-90 transition-opacity"
+              >
+                View Website ↗
+              </a>
+            </div>
+          )}
+        </header>
+      </CaseStudyContentWrapper>
 
       {/* Main Cover Shot with Shared-Element Transition Support */}
       <section className="container-grid mb-16">

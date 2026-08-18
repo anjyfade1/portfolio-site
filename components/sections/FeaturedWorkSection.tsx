@@ -17,12 +17,15 @@ function FeaturedMediaPosterCard({ project }: { project: CaseStudy }) {
   const prefersReducedMotion = useReducedMotion();
   const { startTransition } = useSharedTransition();
   const cardRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
 
   const isActive = isHovered || isFocused;
 
   const handleCardClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (cardRef.current) {
-      const rect = cardRef.current.getBoundingClientRect();
+    const sourceNode = imageRef.current ?? cardRef.current;
+
+    if (sourceNode) {
+      const rect = sourceNode.getBoundingClientRect();
       startTransition(
         {
           slug: project.slug,
@@ -120,6 +123,7 @@ function FeaturedMediaPosterCard({ project }: { project: CaseStudy }) {
       >
         {/* Hero Screenshot Image */}
         <motion.div
+          ref={imageRef}
           className="relative w-full h-full overflow-hidden"
           style={{ viewTransitionName: `project-hero-${project.slug}` }}
           variants={imageVariants}
@@ -261,4 +265,3 @@ export function FeaturedWorkSection() {
     </section>
   );
 }
-

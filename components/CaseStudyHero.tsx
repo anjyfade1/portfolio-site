@@ -17,13 +17,14 @@ export function CaseStudyHeroImage({
   title,
 }: CaseStudyHeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { registerTargetHero } = useSharedTransition();
+  const { activeSlug, registerTargetHero } = useSharedTransition();
+  const isSharedTransitionTarget = activeSlug === slug;
 
   useEffect(() => {
     if (containerRef.current) {
-      registerTargetHero(containerRef.current);
+      registerTargetHero(slug, containerRef.current);
     }
-  }, [registerTargetHero]);
+  }, [registerTargetHero, slug]);
 
   return (
     <div
@@ -32,7 +33,9 @@ export function CaseStudyHeroImage({
       style={{
         viewTransitionName: `project-hero-${slug}`,
       }}
-      className="relative aspect-video w-full rounded-2xl border border-[var(--hairline)] overflow-hidden bg-[#0d0c0b] shadow-2xl"
+      className={`relative aspect-video w-full rounded-2xl border border-[var(--hairline)] overflow-hidden bg-[#0d0c0b] shadow-2xl ${
+        isSharedTransitionTarget ? "opacity-0" : "opacity-100"
+      }`}
     >
       <Image
         src={posterImage}
