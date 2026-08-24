@@ -29,6 +29,7 @@ interface TransitionData {
 
 interface SharedTransitionContextType {
   activeSlug: string | null;
+  isTransitioning: boolean;
   startTransition: (
     data: TransitionData,
     e?: React.MouseEvent<HTMLElement>
@@ -43,7 +44,11 @@ const SharedTransitionContext = createContext<SharedTransitionContextType>({
 });
 
 export function useSharedTransition() {
-  return useContext(SharedTransitionContext);
+  const context = useContext(SharedTransitionContext);
+  if (!context) {
+    throw new Error("useSharedTransition must be used within a SharedProjectTransitionProvider");
+  }
+  return context;
 }
 
 export function SharedProjectTransitionProvider({
@@ -142,6 +147,7 @@ export function SharedProjectTransitionProvider({
     <SharedTransitionContext.Provider
       value={{
         activeSlug: transitionData?.slug || null,
+        isTransitioning: !!transitionData,
         startTransition,
         registerTargetHero,
       }}
