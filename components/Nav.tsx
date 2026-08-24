@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion, useReducedMotion } from "motion/react";
 import { useTheme } from "./ThemeProvider";
 
 const navLinks = [
@@ -16,6 +17,8 @@ export function Nav() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isCtaHovered, setIsCtaHovered] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   const isDark = theme === "dark";
 
@@ -190,9 +193,29 @@ export function Nav() {
 
                 <Link
                   href="/contact"
+                  aria-label="Let's Talk"
+                  onMouseEnter={() => setIsCtaHovered(true)}
+                  onMouseLeave={() => setIsCtaHovered(false)}
+                  onFocus={() => setIsCtaHovered(true)}
+                  onBlur={() => setIsCtaHovered(false)}
                   className="hidden h-10 shrink-0 items-center gap-2 whitespace-nowrap rounded-full bg-[var(--accent)] px-5 font-mono text-xs font-semibold uppercase tracking-wider text-white transition-all duration-150 hover:-translate-y-px hover:bg-[var(--accent-hover)] sm:inline-flex"
                 >
-                  Let&apos;s Talk
+                  <span className="relative block overflow-hidden leading-none" aria-hidden="true">
+                    <motion.span
+                      className="block"
+                      animate={{ y: prefersReducedMotion ? "0%" : isCtaHovered ? "100%" : "0%" }}
+                      transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      Let&apos;s Talk
+                    </motion.span>
+                    <motion.span
+                      className="absolute inset-0 block"
+                      animate={{ y: prefersReducedMotion ? "-100%" : isCtaHovered ? "0%" : "-100%" }}
+                      transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      Let&apos;s Talk
+                    </motion.span>
+                  </span>
                   <svg
                     width="12"
                     height="12"

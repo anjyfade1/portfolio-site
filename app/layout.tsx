@@ -103,7 +103,7 @@ export default function RootLayout({
               Skip to content
             </a>
             <Nav />
-            <main id="main-content" className="min-h-screen">
+            <main id="main-content" className="min-h-screen relative z-10 bg-[var(--bg)]">
               {children}
             </main>
             <Footer />

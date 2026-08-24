@@ -60,7 +60,10 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="bg-[var(--bg-subtle)] border-t border-[var(--hairline)] py-12" role="contentinfo">
+    <footer
+      className="sticky bottom-0 -z-10 bg-[var(--bg-subtle)] border-t border-[var(--hairline)] py-12"
+      role="contentinfo"
+    >
       <div className="container-grid flex flex-col md:flex-row items-center justify-between gap-6">
         {/* Left Info: Brand + Full Name */}
         <div className="flex flex-col gap-1.5 text-center md:text-left">

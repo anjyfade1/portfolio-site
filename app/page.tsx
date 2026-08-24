@@ -8,6 +8,7 @@ import { FeaturedWorkSection } from "@/components/sections/FeaturedWorkSection";
 import { HomeScrollAnimations } from "@/components/HomeScrollAnimations";
 import { PlaygroundSection } from "@/components/sections/PlaygroundSection";
 import { ContactShaderBackground } from "@/components/ContactShaderBackground";
+import { RollingTextButton } from "@/components/RollingTextButton";
 
 export default function HomePage() {
   return (
@@ -93,16 +94,11 @@ export default function HomePage() {
              Have an idea?
              I'd love to hear about it.
             </p>
-            <Link
+            <RollingTextButton
               href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white font-mono text-xs font-semibold uppercase tracking-wider rounded transition-all duration-150"
-            >
-              Start a Conversation
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </Link>
+              text="Start a Conversation"
+              id="home-contact-button"
+            />
           </div>
         </section>
       </HomeScrollAnimations>

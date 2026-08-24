@@ -2,8 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { useSharedTransition } from "./SharedProjectTransition";
+import { motion, useReducedMotion } from "framer-motion";
 
 interface CaseStudyHeroProps {
   slug: string;
@@ -11,31 +10,33 @@ interface CaseStudyHeroProps {
   title: string;
 }
 
+const cinematicEase = [0.16, 1, 0.3, 1] as const;
+
 export function CaseStudyHeroImage({
   slug,
   posterImage,
   title,
 }: CaseStudyHeroProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { activeSlug, registerTargetHero } = useSharedTransition();
-  const isSharedTransitionTarget = activeSlug === slug;
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
-    if (containerRef.current) {
-      registerTargetHero(slug, containerRef.current);
+    // Ensure the case study page always opens instantly at the very top
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
     }
-  }, [registerTargetHero, slug]);
+  }, []);
 
   return (
-    <div
-      ref={containerRef}
+    <motion.div
       id={`case-study-hero-${slug}`}
-      style={{
-        viewTransitionName: `project-hero-${slug}`,
-      }}
-      className={`relative aspect-video w-full rounded-2xl border border-[var(--hairline)] overflow-hidden bg-[#0d0c0b] shadow-2xl ${
-        isSharedTransitionTarget ? "opacity-0" : "opacity-100"
-      }`}
+      initial={
+        prefersReducedMotion
+          ? { opacity: 1 }
+          : { opacity: 0.85, y: 24, scale: 0.985 }
+      }
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.65, ease: cinematicEase }}
+      className="relative aspect-video w-full rounded-2xl border border-[var(--hairline)] overflow-hidden bg-[#0d0c0b] shadow-2xl origin-center will-change-transform"
     >
       <Image
         src={posterImage}
@@ -45,7 +46,7 @@ export function CaseStudyHeroImage({
         sizes="(max-width: 1280px) 100vw, 1280px"
         className="object-cover object-top select-none"
       />
-    </div>
+    </motion.div>
   );
 }
 
@@ -54,11 +55,13 @@ export function CaseStudyContentWrapper({
 }: {
   children: React.ReactNode;
 }) {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+      transition={{ duration: 0.5, ease: cinematicEase, delay: 0.08 }}
     >
       {children}
     </motion.div>
