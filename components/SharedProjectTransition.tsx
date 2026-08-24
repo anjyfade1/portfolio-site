@@ -39,6 +39,7 @@ interface SharedTransitionContextType {
 
 const SharedTransitionContext = createContext<SharedTransitionContextType>({
   activeSlug: null,
+  isTransitioning: false,
   startTransition: () => {},
   registerTargetHero: () => {},
 });
