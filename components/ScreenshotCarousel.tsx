@@ -49,19 +49,10 @@ export function ScreenshotCarousel({
     <div
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      className="rounded-xl border border-[var(--hairline)] bg-[var(--bg-subtle)] overflow-hidden space-y-3 p-4 sm:p-5 group/carousel"
+      className=" overflow-hidden space-y-3 group/carousel"
     >
       <div className="flex items-center justify-between font-mono text-xs">
-        <div className="flex items-center gap-2">
-          <h3 className="font-display font-semibold text-sm sm:text-base text-[var(--text-primary)]">
-            {title}
-          </h3>
-          {isPaused && (
-            <span className="text-[0.6rem] uppercase tracking-wider text-[var(--accent)] font-semibold px-1.5 py-0.5 rounded bg-[var(--accent)]/10">
-              PAUSED
-            </span>
-          )}
-        </div>
+
         <span className="text-2xs text-[var(--accent)] font-semibold tracking-wider">
           {String(currentIndex + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
         </span>
@@ -79,7 +70,7 @@ export function ScreenshotCarousel({
               src={item.imageUrl}
               alt={item.caption}
               fill
-              className="object-cover object-top"
+              className="object-cover object-center"
               sizes="(max-width: 1024px) 100vw, 800px"
               priority={idx === 0}
             />
@@ -107,7 +98,7 @@ export function ScreenshotCarousel({
       </div>
 
       <div className="flex items-center justify-between font-mono text-2xs text-[var(--text-muted)] pt-1">
-        <span className="truncate pr-2">[ FIG ]: {currentItem.caption}</span>
+        <span className="truncate pr-2">FIG: {currentItem.caption}</span>
         {items.length > 1 && (
           <div className="flex gap-1.5 flex-shrink-0">
             {items.map((_, idx) => (

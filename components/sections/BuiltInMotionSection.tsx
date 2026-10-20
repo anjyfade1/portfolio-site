@@ -5,11 +5,14 @@ import {
   useRef,
   useState,
 } from "react";
+import { useNavVisibility } from "./NavVisibilityContext";
+import { TextScramble } from "../TextScramble";
 import {
   motion,
   useScroll,
   useTransform,
   useReducedMotion,
+  useInView,
   type MotionValue,
 } from "motion/react";
 
@@ -44,7 +47,6 @@ const demos: MotionDemo[] = [
     title: "Lead Filtering & Search",
     tags: "Filters · Data Tables",
     videoSrc: "/images/work-video-3.mp4",
-    mediaFit: "contain",
     accent: "rgba(31, 184, 122, 0.34)",
   },
 ];
@@ -151,20 +153,7 @@ function StickyVideoSlide({
           />
         )}
 
-        {/* Project counter badge */}
-        <div className="absolute right-4 top-4 z-10 rounded-full bg-black/50 px-3 py-1.5 font-mono text-xs font-semibold backdrop-blur-sm">
-          <span
-            className={`transition-colors duration-300 ${
-              isActive ? "text-[var(--accent)]" : "text-white/60"
-            }`}
-          >
-            {projectNum}
-          </span>
-          <span className="text-white/30">
-            {" "}
-            / {String(total).padStart(2, "0")}
-          </span>
-        </div>
+        
       </div>
     </motion.div>
   );
@@ -172,64 +161,109 @@ function StickyVideoSlide({
 
 /* ─── Main Section ──────────────────────────────────────────── */
 
-export function BuiltInMotionSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const reducedMotion = useReducedMotion() ?? false;
+function IntroSlide({
+  play,
+  total,
+  scrollProgress,
+  reducedMotion,
+}: {
+  play: boolean;
+  total: number;
+  scrollProgress: MotionValue<number>;
+  reducedMotion: boolean;
+}) {
+  const segments = Math.max(total - 1, 1);
+  const scale = useTransform(scrollProgress, (progress) =>
+    Math.max(0.95, 1 - progress * segments * 0.05),
+  );
 
+  return (
+    <motion.div
+      className="absolute inset-0 z-0"
+      style={reducedMotion ? undefined : { scale }}
+    >
+      <div className="relative flex h-full items-center justify-center overflow-hidden bg-[var(--bg)] px-6 text-center">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div className="absolute -left-[18%] top-[8%] h-[58vw] w-[58vw] rounded-full bg-[rgba(232,98,42,0.16)] blur-[140px]" />
+          <div className="absolute -right-[16%] bottom-[-12%] h-[56vw] w-[56vw] rounded-full bg-[rgba(84,132,255,0.14)] blur-[140px]" />
+          <div className="absolute left-[32%] top-[32%] h-[36vw] w-[36vw] rounded-full bg-[rgba(31,184,122,0.10)] blur-[130px]" />
+        </div>
+        <div className="relative z-10 flex flex-col items-center">
+          <TextScramble play={play} text="Beyond the Design" duration={1400} className="font-display text-4xl font-bold tracking-tight text-[var(--text-primary)] md:text-7xl" />
+          <TextScramble play={play} text="Real interactions from products I&apos;ve built." duration={1800} className="mt-5 max-w-2xl text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl" />
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+export function BuiltInMotionSection() {
+  const containerRef = useRef<HTMLElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isSectionVisible, setIsSectionVisible] = useState(false);
+  const reducedMotion = useReducedMotion() ?? false;
+  const { setHidden } = useNavVisibility();
+  const totalSlides = demos.length + 1;
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  // Track which slide is closest to center
   useEffect(() => {
-    const segments = Math.max(demos.length - 1, 1);
+    const section = containerRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setHidden(entry.isIntersecting);
+        setIsSectionVisible(entry.isIntersecting);
+      },
+      { threshold: 0.01 },
+    );
+
+    observer.observe(section);
+    return () => {
+      observer.disconnect();
+      setHidden(false);
+      setIsSectionVisible(false);
+    };
+  }, [setHidden]);
+
+  useEffect(() => {
+    const segments = Math.max(totalSlides - 1, 1);
     const unsubscribe = scrollYProgress.on("change", (latest) => {
-      const newIndex = Math.min(
-        demos.length - 1,
-        Math.max(0, Math.round(latest * segments)),
-      );
-      setActiveIndex((prev) => (prev === newIndex ? prev : newIndex));
+      const nextIndex = Math.min(totalSlides - 1, Math.max(0, Math.round(latest * segments)));
+      setActiveIndex((previous) => (previous === nextIndex ? previous : nextIndex));
     });
     return unsubscribe;
-  }, [scrollYProgress]);
-
-  // Tall container: (N + 1) viewports gives ~100vh scroll per transition
-  const containerHeight = `${(demos.length + 1) * 100}vh`;
+  }, [scrollYProgress, totalSlides]);
 
   return (
     <section
+      id="built-in-motion"
       ref={containerRef}
-      style={{ height: containerHeight }}
+      className="relative"
+      style={{ height: `${(totalSlides + 1) * 100}vh` }}
       aria-label="Built in Motion"
     >
-      {/* Sticky viewport — pinned while user scrolls through videos */}
-      <div className="sticky top-8 flex h-screen flex-col overflow-hidden">
-        {/* Section header */}
-        <div className="mx-auto w-[min(90vw,960px)] pb-6 pt-12">
-          <h2 className="font-display text-3xl font-bold tracking-tight text-[var(--text-primary)] md:text-5xl">
-            Beyond the Design
-          </h2>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-[var(--text-secondary)] md:text-lg">
-            Real interactions from products I&apos;ve built.
-          </p>
-        </div>
-
-        {/* Video viewport — slides stack here, clipped to this area */}
-        <div className="relative mx-auto w-[min(90vw,960px)] flex-1 overflow-hidden rounded-2xl pb-8">
-          {demos.map((demo, i) => (
-            <StickyVideoSlide
-              key={demo.id}
-              demo={demo}
-              index={i}
-              total={demos.length}
-              isActive={activeIndex === i}
-              scrollProgress={scrollYProgress}
-              reducedMotion={reducedMotion}
-            />
-          ))}
-        </div>
+      <div className="sticky top-0 h-screen overflow-hidden bg-[var(--bg)]">
+        <IntroSlide
+          play={isSectionVisible && activeIndex === 0}
+          total={totalSlides}
+          scrollProgress={scrollYProgress}
+          reducedMotion={reducedMotion}
+        />
+        {demos.map((demo, index) => (
+          <StickyVideoSlide
+            key={demo.id}
+            demo={demo}
+            index={index + 1}
+            total={totalSlides}
+            isActive={activeIndex === index + 1}
+            scrollProgress={scrollYProgress}
+            reducedMotion={reducedMotion}
+          />
+        ))}
       </div>
     </section>
   );

@@ -5,7 +5,6 @@ import Image from "next/image";
 
 interface FeatureVideoPlayerProps {
   title: string;
-  category: string;
   description: string;
   posterUrl?: string;
   videoUrl: string;
@@ -14,7 +13,6 @@ interface FeatureVideoPlayerProps {
 
 export function FeatureVideoPlayer({
   title,
-  category,
   description,
   posterUrl,
   videoUrl,
@@ -107,21 +105,15 @@ export function FeatureVideoPlayer({
           />
         )}
 
-        {/* Status Indicator Badge Overlay */}
-        <div className="absolute top-3 right-3 z-10">
-          <span className="font-mono text-2xs uppercase tracking-wider px-2 py-1 bg-[var(--bg)]/90 text-[var(--text-primary)] border border-[var(--hairline)] backdrop-blur-none">
-            {isPlaying ? "● PLAYING" : "▶ HOVER TO PLAY"}
-          </span>
-        </div>
-
-        {/* Category Tag */}
-        <div className="absolute top-3 left-3 z-10">
-          <span className="font-mono text-2xs uppercase tracking-wider px-2 py-1 bg-[var(--accent)] text-white font-medium">
-            {category}
+        <div
+          className={`pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-black/70 transition-opacity duration-300 ${isPlaying ? "opacity-0" : "opacity-100"}`}
+          aria-hidden="true"
+        >
+          <span className=" bg-[var(--bg)]/90 px-3 py-2 font-mono text-2xs uppercase tracking-[0.18em] text-[var(--accent)] shadow-lg backdrop-blur-sm">
+            Hover to play
           </span>
         </div>
       </div>
-
       {/* Feature Details Content */}
       <div className="p-5 flex flex-col justify-between gap-4">
         <div>

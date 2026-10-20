@@ -1,8 +1,79 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { personal } from "@/data/portfolio";
+import { RollingTextButton } from "@/components/RollingTextButton";
+import Meteors from "@/components/ui/meteors";
+import { Check, ChevronDown } from "lucide-react";
 
+const projectOptions = [
+  { value: "Dashboard / Portal", label: "Dashboard / Analytics System" },
+  { value: "Ordering / E-Commerce", label: "Ordering System / E-Commerce Storefront" },
+  { value: "Client Portal", label: "Client Portal / Admin System" },
+  { value: "Landing Page", label: "High-Conversion Landing Page" },
+  { value: "Full Frontend Build", label: "Full Frontend Application Build" },
+  { value: "Other", label: "Other Collaboration" },
+];
+
+function ProjectTypeSelect({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const selected = projectOptions.find((option) => option.value === value) ?? projectOptions[0];
+
+  useEffect(() => {
+    const closeOnOutsidePress = (event: MouseEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", closeOnOutsidePress);
+    return () => document.removeEventListener("mousedown", closeOnOutsidePress);
+  }, []);
+
+  return (
+    <div ref={rootRef} className="relative">
+      <button
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-labelledby="project-type-label"
+        onClick={() => setOpen((current) => !current)}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") setOpen(false);
+          if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") setOpen(true);
+        }}
+        className="flex w-full items-center justify-between gap-4 rounded border border-[var(--hairline)] bg-[var(--bg)]/80 px-3 py-3 text-left text-sm text-[var(--text-primary)] transition-colors hover:border-[var(--text-muted)] focus:border-[var(--accent)] focus:outline-none"
+      >
+        <span>{selected.label}</span>
+        <ChevronDown className={`h-4 w-4 shrink-0 text-[var(--accent)] transition-transform duration-200 ${open ? "rotate-180" : ""}`} aria-hidden="true" />
+      </button>
+
+      <div
+        role="listbox"
+        aria-label="Product type"
+        className={`absolute z-20 mt-2 w-full origin-top overflow-hidden rounded border border-[var(--hairline)] bg-[var(--bg)]/95 p-1 shadow-2xl backdrop-blur-md transition-all duration-200 ${open ? "scale-100 opacity-100" : "pointer-events-none scale-95 opacity-0"}`}
+      >
+        {projectOptions.map((option) => {
+          const active = option.value === value;
+          return (
+            <button
+              key={option.value}
+              type="button"
+              role="option"
+              aria-selected={active}
+              onClick={() => {
+                onChange(option.value);
+                setOpen(false);
+              }}
+              className={`flex w-full items-center justify-between gap-4 rounded px-3 py-2.5 text-left text-xs transition-colors ${active ? "bg-[var(--accent)]/12 text-[var(--text-primary)]" : "text-[var(--text-secondary)] hover:bg-[var(--bg-subtle)] hover:text-[var(--text-primary)]"}`}
+            >
+              <span>{option.label}</span>
+              {active && <Check className="h-3.5 w-3.5 shrink-0 text-[var(--accent)]" aria-hidden="true" />}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -66,8 +137,16 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="pt-32 pb-24">
-      <div className="container-grid max-w-3xl">
+    <div className="relative min-h-screen overflow-hidden pt-32 pb-24">
+      <Meteors
+        count={50}
+        angle={-18}
+        duration={5}
+        trailLength={110}
+        color="var(--accent)"
+        className="z-0 opacity-45"
+      />
+      <div className="container-grid relative z-10 max-w-3xl">
         {/* Header */}
         <div className="mb-12 text-center">
           <h1 className="font-display font-extrabold text-4xl md:text-5xl text-[var(--text-primary)] mb-4">
@@ -79,7 +158,7 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Form & Direct Email */}
-        <div className="solid-panel p-8 md:p-12">
+        <div className="p-2 md:p-4">
           {submitted ? (
             <div className="text-center py-8 space-y-4">
               <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 flex items-center justify-center mx-auto text-xl font-mono">
@@ -95,16 +174,7 @@ export default function ContactPage() {
                 </a>
                 . I&apos;ll get back to you shortly.
               </p>
-              <button
-                type="button"
-                onClick={() => {
-                  setSubmitted(false);
-                  setFormData({ name: "", email: "", projectType: "Dashboard / Portal", details: "" });
-                }}
-                className="mt-4 px-6 py-2.5 solid-panel text-xs font-mono font-semibold uppercase tracking-wider text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
-              >
-                Send Another Signal
-              </button>
+              <RollingTextButton text="Send Another Signal" variant="secondary" className="mt-4 px-5 py-3" onClick={() => { setSubmitted(false); setFormData({ name: "", email: "", projectType: "Dashboard / Portal", details: "" }); }} />
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -153,22 +223,13 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label htmlFor="projectType" className="block font-mono text-2xs uppercase text-[var(--text-secondary)] font-semibold mb-2">
+                <p id="project-type-label" className="mb-2 block font-mono text-2xs font-semibold uppercase text-[var(--text-secondary)]">
                   Product Type
-                </label>
-                <select
-                  id="projectType"
+                </p>
+                <ProjectTypeSelect
                   value={formData.projectType}
-                  onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                  className="w-full p-3 bg-[var(--bg)] border border-[var(--hairline)] rounded text-sm text-[var(--text-primary)] focus:border-[var(--accent)] focus:outline-none font-body"
-                >
-                  <option value="Dashboard / Portal">Dashboard / Analytics System</option>
-                  <option value="Ordering / E-Commerce">Ordering System / E-Commerce Storefront</option>
-                  <option value="Client Portal">Client Portal / Admin System</option>
-                  <option value="Landing Page">High-Conversion Landing Page</option>
-                  <option value="Full Frontend Build">Full Frontend Application Build</option>
-                  <option value="Other">Other Collaboration</option>
-                </select>
+                  onChange={(projectType) => setFormData({ ...formData, projectType })}
+                />
               </div>
 
               <div>
@@ -186,23 +247,7 @@ export default function ContactPage() {
                 />
               </div>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full py-4 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white font-mono text-xs font-semibold uppercase tracking-wider rounded transition-all duration-150 shadow-sm disabled:opacity-50 flex items-center justify-center gap-2"
-              >
-                {isSubmitting ? (
-                  <>
-                    <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                    </svg>
-                    Transmitting Mission Signal...
-                  </>
-                ) : (
-                  "Send Message →"
-                )}
-              </button>
+              <RollingTextButton type="submit" disabled={isSubmitting} text={isSubmitting ? "Transmitting Mission Signal" : "Send Message"} className="w-full py-4" />
             </form>
           )}
 

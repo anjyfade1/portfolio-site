@@ -61,7 +61,7 @@ export function Footer() {
 
   return (
     <footer
-      className="sticky bottom-0 -z-10 bg-[var(--bg-subtle)] border-t border-[var(--hairline)] py-12"
+      className="relative z-0 bg-[var(--bg-subtle)] border-t border-[var(--hairline)] py-12"
       role="contentinfo"
     >
       <div className="container-grid flex flex-col md:flex-row items-center justify-between gap-6">

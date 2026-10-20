@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { projects, type CaseStudy } from "@/data/portfolio";
 import { useSharedTransition } from "@/components/SharedProjectTransition";
+import { RollingTextButton } from "@/components/RollingTextButton";
 
 const easeCurve = [0.22, 1, 0.36, 1] as const;
 
@@ -211,12 +212,12 @@ export function FeaturedWorkSection() {
 
   return (
     <section className="section-pad relative overflow-hidden" aria-label="Featured Work">
-      <div className="container-grid">
+      <div className="mx-auto w-full max-w-[1560px] px-4 md:px-6">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <ScrollReveal direction="up" distance={40} duration={0.7}>
             <div className="max-w-2xl">
-              <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight text-[var(--text-primary)]">
+              <h2 className="font-display text-5xl font-bold tracking-tight text-[var(--text-primary)] md:text-7xl">
                 Products I&apos;ve Built
               </h2>
               <p className="mt-4 text-base md:text-lg text-[var(--text-secondary)] leading-relaxed">
@@ -226,26 +227,11 @@ export function FeaturedWorkSection() {
           </ScrollReveal>
 
           <ScrollReveal direction="up" distance={24} delay={0.15} duration={0.6}>
-            <Link
+            <RollingTextButton
               href="/work"
-              className="inline-flex items-center gap-2 font-mono text-xs font-semibold tracking-wider uppercase text-[var(--accent)] hover:text-[var(--accent-hover)] transition-colors duration-150 shrink-0 self-start md:self-end"
-            >
-              View All Work
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </Link>
+              text="View All Work"
+              className="shrink-0 self-start px-5 py-3 shadow-none hover:-translate-y-px md:self-end"
+            />
           </ScrollReveal>
         </div>
 

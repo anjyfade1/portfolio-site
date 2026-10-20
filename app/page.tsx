@@ -1,7 +1,5 @@
-import Link from "next/link";
 import { personal, currentArc, projects } from "@/data/portfolio";
 import { Mascot3D } from "@/components/Mascot3D";
-import { CommandBar } from "@/components/CommandBar";
 import { ArcAtmosphere } from "@/components/ArcAtmosphere";
 import { BuiltInMotionSection } from "@/components/sections/BuiltInMotionSection";
 import { FeaturedWorkSection } from "@/components/sections/FeaturedWorkSection";
@@ -13,10 +11,9 @@ import { RollingTextButton } from "@/components/RollingTextButton";
 export default function HomePage() {
   return (
     <div>
-      <CommandBar />
 
       {/* 01. HERO SECTION — Identity & Positioning */}
-      <section className="section-pad relative isolate flex min-h-screen items-center overflow-hidden !pt-28 md:!pt-32" aria-label="Hero">
+      <section id="home-hero" className="section-pad relative isolate flex min-h-screen items-center overflow-hidden !pt-28 md:!pt-32" aria-label="Hero">
         <ArcAtmosphere />
         <div className="container-grid relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 lg:gap-16 items-center">
           {/* Left Column — Text & Positioning */}
@@ -37,32 +34,10 @@ export default function HomePage() {
             </p>
 
 
-            {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-4">
-              <Link
-                href="/work"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white font-mono text-xs font-semibold uppercase tracking-wider rounded transition-all duration-150 shadow-sm"
-              >
-                View Work
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 px-6 py-3 solid-panel text-[var(--text-primary)] hover:border-[var(--accent)] font-mono text-xs font-semibold uppercase tracking-wider rounded transition-all duration-150"
-              >
-                Start a Mission
-              </Link>
-            </div>
-
-            {/* Command Bar Keyboard Shortcut Hint */}
-            <div className="mt-8 flex items-center gap-2 font-mono text-2xs text-[var(--text-muted)]">
-              <span className="px-1.5 py-0.5 solid-panel text-[var(--text-secondary)] font-bold">
-                Ctrl + K
-              </span>
-              <span>Press to open command palette</span>
+            {/* CTAs — match the navbar's pill shape and rolling interaction. */}
+            <div className="flex flex-wrap items-center gap-3">
+              <RollingTextButton href="/work" text="View Work" className="px-5 py-3 shadow-none hover:-translate-y-px" />
+              <RollingTextButton href="/contact" text="Start a Mission" variant="secondary" className="px-5 py-3 hover:-translate-y-px" />
             </div>
           </div>
 

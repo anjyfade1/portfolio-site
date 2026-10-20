@@ -6,6 +6,8 @@ import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 import { projects, type CaseStudy } from "@/data/portfolio";
 import { useSharedTransition } from "@/components/SharedProjectTransition";
+import DotPattern from "@/components/ui/dot-pattern";
+import SmoothReveal from "@/components/ui/smooth-reveal";
 
 const easeCurve = [0.22, 1, 0.36, 1] as const;
 
@@ -98,7 +100,7 @@ function ProductShowcaseCard({ project }: { project: CaseStudy }) {
             src={project.posterImage}
             alt={`${project.title} cover`}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover object-top select-none"
             priority={project.featured}
           />
@@ -173,9 +175,10 @@ function ProductShowcaseCard({ project }: { project: CaseStudy }) {
 
 export default function WorkPage() {
   return (
-    <div className="pt-32 pb-24">
+    <div className="relative min-h-screen overflow-hidden pt-32 pb-24">
+      <DotPattern spacing={22} dotSize={1.9} glowRadius={420} className="z-0 text-[var(--accent)]" />
       {/* Page Header (1440px Max Width) */}
-      <section className="mx-auto max-w-[1440px] px-6 sm:px-8 lg:px-12 mb-16 md:mb-20">
+      <section className="relative z-10 mx-auto mb-16 max-w-[1440px] px-6 sm:px-8 md:mb-20 lg:px-12">
         <h1 className="font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-[var(--text-primary)] mb-6">
           THE ARCHIVE
         </h1>
@@ -190,10 +193,17 @@ export default function WorkPage() {
       </section>
 
       {/* Projects Showcase Gallery (1440px Max Width — 4col XL / 3col LG / 2col MD / 1col Mobile) */}
-      <main className="mx-auto max-w-[1440px] px-6 sm:px-8 lg:px-12 mb-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 lg:gap-10">
-          {projects.map((project) => (
-            <ProductShowcaseCard key={project.slug} project={project} />
+      <main className="relative z-10 mx-auto mb-24 max-w-[1440px] px-6 sm:px-8 lg:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+          {projects.map((project, index) => (
+            <SmoothReveal
+              key={project.slug}
+              delay={(index % 3) * 0.1}
+              duration={0.6}
+              distance={24}
+            >
+              <ProductShowcaseCard project={project} />
+            </SmoothReveal>
           ))}
         </div>
       </main>

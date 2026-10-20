@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { SharedProjectTransitionProvider } from "@/components/SharedProjectTransition";
+import { NavVisibilityProvider } from "@/components/sections/NavVisibilityContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -96,17 +97,19 @@ export default function RootLayout({
       <body className="font-body antialiased transition-colors duration-200">
         <ThemeProvider>
           <SharedProjectTransitionProvider>
-            <a
-              href="#main-content"
-              className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[9999] px-4 py-2 bg-[var(--accent)] text-white rounded font-mono text-xs font-medium"
-            >
-              Skip to content
-            </a>
-            <Nav />
-            <main id="main-content" className="min-h-screen relative z-10 bg-[var(--bg)]">
-              {children}
-            </main>
-            <Footer />
+            <NavVisibilityProvider>
+              <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[9999] px-4 py-2 bg-[var(--accent)] text-white rounded font-mono text-xs font-medium"
+              >
+                Skip to content
+              </a>
+              <Nav />
+              <main id="main-content" className="min-h-screen relative z-10 bg-[var(--bg)]">
+                {children}
+              </main>
+              <Footer />
+            </NavVisibilityProvider>
           </SharedProjectTransitionProvider>
         </ThemeProvider>
       </body>

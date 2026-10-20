@@ -1,5 +1,5 @@
 // ============================================================
-// THE FRONTEND ARC — DATA MODULE (AJ / Anjolaoluwa Onifade)
+// THE FRONTEND ARC  DATA MODULE (AJ / Anjolaoluwa Onifade)
 // Centralized Data Layer for Data-Driven Rendering
 // ============================================================
 
@@ -98,7 +98,7 @@ export const personal = {
   bioShort: "I build modern web products for businesses. Dashboards, client portals, ordering systems, and high-conversion landing pages with React, TypeScript, Next.js, and Tailwind CSS.",
   bioFull: [
     "I enjoy bringing ideas to life. From the first conversation to the final interaction, I like building products that feel intuitive, reliable, and enjoyable to use.",
-    "My background is in Mechanical Engineering, where I learned to think in systems. One decision can influence everything that follows and that mindset shapes how I approach software today. I care about clean architecture, maintainable code, and the small details that make a product feel complete.",
+    "My background is in Mechanical Engineering, where I learned that one decision can influence everything that follows and that mindset shapes how I approach software today. I care about clean architecture, maintainable code, and the small details that make a product feel complete.",
     "I'm also exploring cybersecurity, which has changed the way I think about building applications. Understanding how systems fail has made me more intentional about how they should be designed in the first place.",
     "I enjoy seeing projects through to completion. There's something rewarding about taking an idea from a sketch, solving the challenges along the way, and shipping something that people genuinely enjoy using.",
   ],
@@ -126,10 +126,10 @@ export const currentArc = {
 export const projects: CaseStudy[] = [
   {
     slug: "leads-profile",
-    title: "LeadsProfile Lead Management SaaS",
+    title: "LeadsProfile",
     tagline: "SaaS platform for lead purchasing, organization, and distribution with dual client and admin platforms.",
     productType: "Lead Management",
-    year: "2024",
+    year: "2025-2026",
     role: "Frontend Developer",
     status: "Real Client Project · Rebuilt V1 & V2",
     featured: true,
@@ -138,12 +138,12 @@ export const projects: CaseStudy[] = [
     posterImage: "/images/projects/leads-profile/admin-overview.png",
     stack: ["React", "Vite", "Tailwind CSS", "GSAP", "Matter.js", "Radix UI", "Lucide React"],
     featureChips: [
-      "• Client Platform",
-      "• Admin Platform",
-      "• GSAP + Matter.js Folder",
-      "• Excel Workflows",
-      "• Multi-Theme Engine",
-      "• Analytics Charts",
+      " Client Platform",
+      " Admin Platform",
+      " GSAP + Matter.js Folder",
+      " Excel Workflows",
+      " Multi-Theme Engine",
+      " Analytics Charts",
     ],
     overview: "LeadsProfile is a SaaS platform that allows clients to request, purchase, organize, and manage leads, while providing an administrative platform for uploading, configuring, distributing, and managing leads.\n\nI built the frontend from scratch across both the client and admin platforms, having also built the previous V1 version.",
     theProduct: {
@@ -222,7 +222,7 @@ export const projects: CaseStudy[] = [
     ],
     engineering: [
       {
-        title: "Folder Interaction — GSAP + Matter.js",
+        title: "Folder Interaction  GSAP + Matter.js",
         solution: "Combined Matter.js rigid-body physics with GSAP motion timelines to create a tactile folder interaction that behaves like a physical folder opening and accepting files.",
       },
       {
@@ -243,23 +243,23 @@ export const projects: CaseStudy[] = [
         title: "System Interface Views",
         items: [
           {
-            caption: "Client Overview Dashboard — Orders pipeline, fulfillment reports, and daytime theme",
+            caption: "Client Overview Dashboard  Orders pipeline, fulfillment reports, and daytime theme",
             imageUrl: "/images/projects/leads-profile/client-overview.png",
           },
           {
-            caption: "Client 'My Leads' Orders Grid — Interactive folder cards and lead progress tracking",
+            caption: "Client 'My Leads' Orders Grid  Interactive folder cards and lead progress tracking",
             imageUrl: "/images/projects/leads-profile/client-leads-grid.png",
           },
           {
-            caption: "Admin Overview Dashboard — Order revenue analytics, pipeline metrics, and pending approvals",
+            caption: "Admin Overview Dashboard  Order revenue analytics, pipeline metrics, and pending approvals",
             imageUrl: "/images/projects/leads-profile/admin-overview.png",
           },
           {
-            caption: "Admin Daily Leads Uploads — Batch tracking, total leads analytics, and upload management",
+            caption: "Admin Daily Leads Uploads  Batch tracking, total leads analytics, and upload management",
             imageUrl: "/images/projects/leads-profile/admin-uploads.png",
           },
           {
-            caption: "Admin Header Configuration Modal — Spreadsheet alias mapping and live header preview",
+            caption: "Admin Header Configuration Modal  Spreadsheet alias mapping and live header preview",
             imageUrl: "/images/projects/leads-profile/admin-header-mapping.png",
           },
         ],
@@ -269,10 +269,10 @@ export const projects: CaseStudy[] = [
   },
   {
     slug: "easy-gas",
-    title: "EasyGas LPG Commerce & Logistics Platform",
+    title: "EasyGas",
     tagline: "Multi-role LPG commerce platform connecting customers, vendors, delivery operators, and administrators.",
     productType: "LPG Commerce",
-    year: "2023",
+    year: "2023-2024",
     role: "Frontend Developer",
     status: "Private Client Platform · Restricted Access",
     featured: true,
@@ -280,12 +280,12 @@ export const projects: CaseStudy[] = [
     posterImage: "/images/projects/easy-gas/admin-overview.png",
     stack: ["React", "React Query", "Chakra UI", "Chart.js", "CryptoJS", "Slick Carousel"],
     featureChips: [
-      "• Customer Marketplace",
-      "• Vendor Portal",
-      "• Delivery Operator UI",
-      "• Admin Ecosystem",
-      "• Wallet Systems",
-      "• KYC Verification Guards",
+      " Customer Marketplace",
+      " Vendor Portal",
+      " Delivery Operator UI",
+      " Admin Ecosystem",
+      " Wallet Systems",
+      " KYC Verification Guards",
     ],
     overview: "EasyGas is an LPG commerce platform connecting customers, vendors, and delivery operators through dedicated digital experiences.\n\nI worked on the frontend across the customer, vendor, delivery, and administrative platforms, building interfaces and workflows supporting onboarding, verification, purchasing, product management, delivery operations, and wallet-based transactions.",
     thePlatform: [
@@ -401,23 +401,23 @@ export const projects: CaseStudy[] = [
         title: "System Interface Views",
         items: [
           {
-            caption: "Admin Overview Dashboard — Ecosystem metrics, SLA monitoring, onboarding requests, and recent initiated orders",
+            caption: "Admin Overview Dashboard  Ecosystem metrics, SLA monitoring, onboarding requests, and recent initiated orders",
             imageUrl: "/images/projects/easy-gas/admin-overview.png",
           },
           {
-            caption: "Admin KYC & Document Verification — Onboarding request modal, DPR certificate review, and account validation drawer",
+            caption: "Admin KYC & Document Verification  Onboarding request modal, DPR certificate review, and account validation drawer",
             imageUrl: "/images/projects/easy-gas/admin-verification.png",
           },
           {
-            caption: "Multi-Role User Registration — User type selection for Filling Plants (Customers), Terminals (Vendors), and Transporters (Delivery)",
+            caption: "Multi-Role User Registration  User type selection for Filling Plants (Customers), Terminals (Vendors), and Transporters (Delivery)",
             imageUrl: "/images/projects/easy-gas/user-onboarding.png",
           },
           {
-            caption: "Vendor Depot Dashboard — Revenue reporting analysis, active product pricing controls, and ongoing order tracking",
+            caption: "Vendor Depot Dashboard  Revenue reporting analysis, active product pricing controls, and ongoing order tracking",
             imageUrl: "/images/projects/easy-gas/vendor-dashboard.png",
           },
           {
-            caption: "Orders & Delivery Fulfillment — Outgoing orders grid, customer details, delivery status, and invoice PDF preview",
+            caption: "Orders & Delivery Fulfillment  Outgoing orders grid, customer details, delivery status, and invoice PDF preview",
             imageUrl: "/images/projects/easy-gas/orders-fulfillment.png",
           },
         ],
@@ -427,10 +427,10 @@ export const projects: CaseStudy[] = [
   },
   {
     slug: "planned-rations",
-    title: "PlannedRations Personalized Nutrition Platform",
+    title: "PlannedRations",
     tagline: "Personalized meal-planning and nutrition platform helping individuals make better food choices based on their goals.",
     productType: "Meal Planning & Nutrition",
-    year: "2026",
+    year: "2025-2026",
     role: "Frontend Developer",
     status: "IN DEVELOPMENT",
     featured: true,
@@ -439,12 +439,12 @@ export const projects: CaseStudy[] = [
     posterImage: "/images/projects/planned-rations/admin-dashboard.png",
     stack: ["React", "Vite", "Tailwind CSS", "Recharts", "Swiper.js", "GSAP"],
     featureChips: [
-      "• Landing Page",
-      "• Nutrition Blog",
-      "• Admin Dashboard",
-      "• Member Analytics",
-      "• CSV Data Export",
-      "• Recipe Management",
+      "Landing Page",
+      "Nutrition Blog",
+      "Admin Dashboard",
+      "Member Analytics",
+      "CSV Data Export",
+      "Recipe Management",
     ],
     overview: "PlannedRations is a personalized meal-planning and nutrition platform designed to help people make better food choices based on their individual goals and needs.\n\nThe wider product is being developed as a mobile application.\n\nMy work has focused on the public-facing website/landing page and the administrative platform that supports the product.",
     theProduct: {
@@ -519,19 +519,19 @@ export const projects: CaseStudy[] = [
         title: "System Interface Views",
         items: [
           {
-            caption: "Admin Analytics Dashboard — Active subscriber tracking, user growth bar charts, user tier distribution & top content performance",
+            caption: "Admin Analytics Dashboard  Active subscriber tracking, user growth bar charts, user tier distribution & top content performance",
             imageUrl: "/images/projects/planned-rations/admin-dashboard.png",
           },
           {
-            caption: "Public Landing Page Hero — Product positioning, App Store / Google Play badges, navigation header & mobile preview",
+            caption: "Public Landing Page Hero  Product positioning, App Store / Google Play badges, navigation header & mobile preview",
             imageUrl: "/images/projects/planned-rations/landing-hero.png",
           },
           {
-            caption: "Admin Food Library & Recipe Manager — Searchable recipe catalog, calorie calculations, cooking steps & difficulty indicators",
+            caption: "Admin Food Library & Recipe Manager  Searchable recipe catalog, calorie calculations, cooking steps & difficulty indicators",
             imageUrl: "/images/projects/planned-rations/recipe-manager.png",
           },
           {
-            caption: "Public Nutrition Blog & Content Hub — Article directory, topic search, and published healthy lifestyle guides",
+            caption: "Public Nutrition Blog & Content Hub  Article directory, topic search, and published healthy lifestyle guides",
             imageUrl: "/images/projects/planned-rations/public-blog.png",
           },
         ],
@@ -544,7 +544,7 @@ export const projects: CaseStudy[] = [
     title: "Banking Internal Operations Platform",
     tagline: "Internal banking operations platform for administrative user, account, and transaction controls.",
     productType: "Internal Banking System",
-    year: "2023",
+    year: "2024-2025",
     role: "Frontend Developer",
     status: "PRIVATE INTERNAL SYSTEM",
     featured: false,
@@ -552,11 +552,11 @@ export const projects: CaseStudy[] = [
     posterImage: "/images/projects/banking-dashboard/overview.png",
     stack: ["React", "Chakra UI", "Chart.js", "React Query", "CryptoJS"],
     featureChips: [
-      "• Private Internal System",
-      "• User Management",
-      "• Account Controls",
-      "• Transaction Limits",
-      "• Role-Based Access",
+      " Private Internal System",
+      " User Management",
+      " Account Controls",
+      " Transaction Limits",
+      " Role-Based Access",
     ],
     overview: "This was an internal banking operations platform used by administrative teams to manage users, accounts, transactions, and operational controls.\n\nThe system included different administrative roles, including Admin and Superadmin.\n\nI contributed to the frontend experience across these administrative workflows.",
     coreCapabilities: [
@@ -626,7 +626,7 @@ export const projects: CaseStudy[] = [
   },
   {
     slug: "your-credit-pal",
-    title: "YourCreditPal Loan Matching Platform",
+    title: "YourCreditPal",
     tagline: "Conversion-focused loan-matching platform connecting users with loan opportunities through a structured application experience.",
     productType: "Loan Matching Platform",
     year: "2026",
@@ -638,11 +638,11 @@ export const projects: CaseStudy[] = [
     posterImage: "/images/projects/your-credit-pal/application-form.png",
     stack: ["React", "GSAP", "Tailwind CSS", "Framer Motion"],
     featureChips: [
-      "• Landing Page",
-      "• Multi-Step Application",
-      "• Form State Validation",
-      "• Responsive Layouts",
-      "• Content & Blog Hub",
+      " Landing Page",
+      " Multi-Step Application",
+      " Form State Validation",
+      " Responsive Layouts",
+      " Content & Blog Hub",
     ],
     overview: "YourCreditPal is a loan-matching platform that helps users explore loan opportunities by completing a quick application and providing information used to match them with potential lenders.\n\nThe frontend experience focuses on making the application process clear, approachable, and easy to complete.",
     theExperience: {
@@ -690,15 +690,15 @@ export const projects: CaseStudy[] = [
         title: "System Interface Views",
         items: [
           {
-            caption: "Multi-Step Loan Application Flow — Structured step progression (Loan, Personal, Financial, Housing), borrow slider ($1k–$35k), purpose selection chips, credit score selection, and user testimonial sidebar",
+            caption: "Multi-Step Loan Application Flow  Structured step progression (Loan, Personal, Financial, Housing), borrow slider ($1k“$35k), purpose selection chips, credit score selection, and user testimonial sidebar",
             imageUrl: "/images/projects/your-credit-pal/application-form.png",
           },
           {
-            caption: "Public Landing Page Hero — Conversion hero section ('Find Loan Offers That Match Your Needs'), main CTA trigger ('See My Personal Loan Options'), and header navigation",
+            caption: "Public Landing Page Hero  Conversion hero section ('Find Loan Offers That Match Your Needs'), main CTA trigger ('See My Personal Loan Options'), and header navigation",
             imageUrl: "/images/projects/your-credit-pal/landing-hero.png",
           },
           {
-            caption: "FAQ & Support Center — Categorized accordion questions (Applications, Loan Process, Eligibility, Security & Privacy, Repayment) and lender matching disclosures",
+            caption: "FAQ & Support Center  Categorized accordion questions (Applications, Loan Process, Eligibility, Security & Privacy, Repayment) and lender matching disclosures",
             imageUrl: "/images/projects/your-credit-pal/faq-support.png",
           },
         ],
@@ -708,7 +708,7 @@ export const projects: CaseStudy[] = [
   },
   {
     slug: "hoc",
-    title: "HOC — House of Creatives",
+    title: "House of Creatives",
     tagline: "Media-rich creative agency platform connecting influencers, creators, and bold brands.",
     productType: "Creative Platform",
     year: "2025",
@@ -720,11 +720,11 @@ export const projects: CaseStudy[] = [
     posterImage: "/images/projects/hoc/hero-landing.png",
     stack: ["Sanity", "React Parse", "Firebase", "React", "Vite", "Tailwind CSS", "Framer Motion", "Swiper", "Embla Carousel"],
     featureChips: [
-      "• Media-Rich Hero",
-      "• Influencer & Brand Ecosystem",
-      "• Sanity CMS Content",
-      "• Interactive Mobile Showcase",
-      "• Connected Submission Flow",
+      " Media-Rich Hero",
+      " Influencer & Brand Ecosystem",
+      " Sanity CMS Content",
+      " Interactive Mobile Showcase",
+      " Connected Submission Flow",
     ],
     overview: "HOC (House of Creatives) is a creative platform designed to connect creatives with opportunities and allow brands to engage with the creative network.\n\nI built the frontend experience for the website, including the highly visual landing experience, animations, content-driven case studies and blog, and the submission form.",
     creativeExperience: [
@@ -771,19 +771,19 @@ export const projects: CaseStudy[] = [
         title: "System Interface Gallery",
         items: [
           {
-            caption: "Landing Page Hero — 'HOUSE OF CREATIVES' header, floating animation icons, and primary navigation",
+            caption: "Landing Page Hero  'HOUSE OF CREATIVES' header, floating animation icons, and primary navigation",
             imageUrl: "/images/projects/hoc/hero-landing.png",
           },
           {
-            caption: "Dual Audience Split — 'Work With HOC' for brands and 'Join as a Creator' for bold creative voices",
+            caption: "Dual Audience Split  'Work With HOC' for brands and 'Join as a Creator' for bold creative voices",
             imageUrl: "/images/projects/hoc/creative-audience.png",
           },
           {
-            caption: "Interactive Mobile Showcase — 'Ready to Create with HOC?' with live social metrics (@thehocmgt 678.2k followers)",
+            caption: "Interactive Mobile Showcase  'Ready to Create with HOC?' with live social metrics (@thehocmgt 678.2k followers)",
             imageUrl: "/images/projects/hoc/mobile-showcase.png",
           },
           {
-            caption: "Featured Case Studies & Brand Showcase — Creator video story player and brand feature CTA ('Infinix')",
+            caption: "Featured Case Studies & Brand Showcase  Creator video story player and brand feature CTA ('Infinix')",
             imageUrl: "/images/projects/hoc/case-studies-brands.png",
           },
         ],
@@ -805,11 +805,11 @@ export const projects: CaseStudy[] = [
     posterImage: "/images/projects/tuyen/homepage-hero.png",
     stack: ["React", "Tailwind CSS", "GSAP", "Sanity"],
     featureChips: [
-      "• Mission Storytelling",
-      "• Initiatives Showcase",
-      "• Volunteer Onboarding",
-      "• Donation Pathways",
-      "• Sanity CMS Content",
+      " Mission Storytelling",
+      " Initiatives Showcase",
+      " Volunteer Onboarding",
+      " Donation Pathways",
+      " Sanity CMS Content",
     ],
     overview: "Tuyen Legacy Foundation for Girls is an NGO focused on empowering women and girls through initiatives that support their growth, learning, opportunities, and ability to pursue their goals.\n\nThe website was built to communicate the organization's mission, showcase its work and initiatives, and provide ways for people to engage through activities such as donating and volunteering.",
     digitalExperience: [
@@ -854,21 +854,102 @@ export const projects: CaseStudy[] = [
         title: "System Interface Gallery",
         items: [
           {
-            caption: "Homepage Hero — 'We Back Her Future' mission header, primary CTAs ('Donate Now', 'Become A Volunteer'), and hero media banner",
+            caption: "Homepage Hero  'We Back Her Future' mission header, primary CTAs ('Donate Now', 'Become A Volunteer'), and hero media banner",
             imageUrl: "/images/projects/tuyen/homepage-hero.png",
           },
           {
-            caption: "Volunteer With Us — Engagement section detailing Mentorship, Event Support, and Administrative volunteering pathways",
+            caption: "Volunteer With Us  Engagement section detailing Mentorship, Event Support, and Administrative volunteering pathways",
             imageUrl: "/images/projects/tuyen/volunteer-section.png",
           },
           {
-            caption: "Completed Programs Showcase — 'Northern Girls Literacy Initiative' program card with completion date and details link",
+            caption: "Completed Programs Showcase  'Northern Girls Literacy Initiative' program card with completion date and details link",
             imageUrl: "/images/projects/tuyen/programs-showcase.png",
           },
         ],
       },
     ],
     result: "A responsive, animation-rich NGO website designed to communicate the foundation's mission, showcase its initiatives, and make it easier for visitors to engage through volunteering and donations.",
+  },
+  {
+    slug: "fairloans-nulldebt",
+    title: "Fairloans & Nulldebt",
+    tagline: "A three-brand loan website suite for Fairloans America, Fairloans Canada, and Nulldebt.",
+    productType: "Landing Page",
+    year: "2025",
+    role: "Frontend Developer",
+    status: "Websites no longer live",
+    featured: false,
+    color: "#1F7180",
+    posterImage: "/images/projects/fairloans-nulldebt/screen-6.jpeg",
+    stack: ["HTML5", "CSS3", "Bootstrap", "JavaScript"],
+    featureChips: [
+      " Three Brand Websites",
+      " Conversion Landing Pages",
+      " Responsive Bootstrap Layouts",
+      " Interactive JavaScript",
+    ],
+    overview: "Fairloans & Nulldebt was a three-brand web build for Fairloans America, Fairloans Canada, and Nulldebt. Each public-facing site needed to make a loan journey easy to understand while keeping the visual language and conversion paths suited to its market.\n\nI built the frontend with HTML, CSS, Bootstrap, and vanilla JavaScript, translating the distinct brand directions into responsive landing pages with clear loan application calls to action.",
+    theProduct: {
+      clientPlatform: [
+        "Fairloans America loan landing page",
+        "Fairloans Canada loan landing page",
+        "Nulldebt consumer loan website",
+        "Clear application and loan enquiry calls to action",
+        "Responsive layouts for desktop and mobile visitors",
+        "Trust, credit-score, and FAQ content areas",
+      ],
+    },
+    whatIBuilt: [
+      {
+        title: "Three-Brand Frontend Build",
+        description: "Developed distinct responsive web experiences for the Fairloans America, Fairloans Canada, and Nulldebt brands while retaining consistent conversion-focused structure.",
+      },
+      {
+        title: "Bootstrap Responsive Layouts",
+        description: "Used Bootstrap's grid and utility system to create layouts that adapt cleanly from wide marketing screens to mobile viewports.",
+      },
+      {
+        title: "Conversion-Focused Landing Pages",
+        description: "Implemented prominent application CTAs, benefit-led hero sections, trust signals, credit-score prompts, and simple next-step paths.",
+      },
+      {
+        title: "Interactive JavaScript Details",
+        description: "Added lightweight JavaScript interactions to support navigation and the expandable FAQ content without a frontend framework.",
+      },
+    ],
+    interfaceCarousels: [
+      {
+        title: "Fairloans & Nulldebt Website Suite",
+        items: [
+          {
+            caption: "Fairloans promotional banner — quick-loan messaging, application CTA, and branded graphic treatment.",
+            imageUrl: "/images/projects/fairloans-nulldebt/screen-1.jpeg",
+          },
+          {
+            caption: "Fairloans America — payday-loan landing page with approval and credit-alert visual cues.",
+            imageUrl: "/images/projects/fairloans-nulldebt/screen-2.jpeg",
+          },
+          {
+            caption: "Fairloans Canada — flexible financing hero and credit-score callout.",
+            imageUrl: "/images/projects/fairloans-nulldebt/screen-3.jpeg",
+          },
+          {
+            caption: "Nulldebt FAQ and footer — expandable support content and brand information.",
+            imageUrl: "/images/projects/fairloans-nulldebt/screen-4.jpeg",
+          },
+          {
+            caption: "Nulldebt process section — clear three-step loan journey from application to funds.",
+            imageUrl: "/images/projects/fairloans-nulldebt/screen-5.jpeg",
+          },
+          {
+            caption: "Nulldebt landing page — Canadian payday-loan hero with credit-score CTA.",
+            imageUrl: "/images/projects/fairloans-nulldebt/screen-6.jpeg",
+          },
+        ],
+      },
+    ],
+    currentStatus: "This was a client project for a three-brand loan company. The websites are no longer live, so this case study preserves selected screens from the original work rather than linking to a production site.",
+    result: "Delivered responsive, conversion-led public websites for the Fairloans America, Fairloans Canada, and Nulldebt brands using HTML, CSS, Bootstrap, and vanilla JavaScript.",
   },
 ];
 
@@ -878,7 +959,7 @@ export const experience: ExperienceItem[] = [
     company: "Independent Contractor",
     location: "Remote",
     type: "Contract / Freelance",
-    period: "Jan 2022 – Present",
+    period: "Jan 2022 - Present",
     summary: "Architecting and shipping production web applications for fintech, e-commerce, and enterprise business clients. End-to-end frontend ownership from initial spec to deployment.",
     bullets: [
       "Delivered secure banking intelligence dashboard with real-time transaction monitoring and automated PDF/CSV reporting.",
@@ -894,7 +975,7 @@ export const experience: ExperienceItem[] = [
     company: "NEFM",
     location: "Ibadan, Nigeria",
     type: "NYSC Placement",
-    period: "Jan 2025 – Oct 2025",
+    period: "Jan 2025 - Oct 2025",
     summary: "Managed IT infrastructure, identity access management (IAM), technical support, and user security workflows for 50+ staff members.",
     bullets: [
       "Configured IAM workflows, user access roles, password security policies, and permission audits.",
@@ -908,7 +989,7 @@ export const experience: ExperienceItem[] = [
     company: "Sterling Bank",
     location: "Lagos, Nigeria",
     type: "Internship",
-    period: "Apr 2022 – Oct 2022",
+    period: "Apr 2022 - Oct 2022",
     summary: "Built reusable React UI components for the bank's customer-facing web application in an Agile team environment.",
     bullets: [
       "Translated high-fidelity Figma designs into pixel-perfect, responsive React components with 100% brand consistency.",
@@ -926,24 +1007,30 @@ export const loadout = {
     { name: "TypeScript", level: "Primary", description: "Strict type safety, generics, schema contracts" },
     { name: "Next.js", level: "Primary", description: "App Router, static export, SSR/SSG patterns" },
     { name: "Tailwind CSS", level: "Primary", description: "v4 design tokens, custom utility systems" },
+    { name: "Bootstrap", level: "Core", description: "Responsive grid systems and production UI patterns" },
     { name: "JavaScript (ES6+)", level: "Core", description: "Async/await, DOM APIs, event loop mechanics" },
   ],
   stateData: [
     { name: "Redux Toolkit", description: "Centralized state, normalized stores, middleware" },
     { name: "React Query", description: "Server state caching, optimistic updates, query invalidation" },
-    { name: "REST APIs", description: "Fetch/Axios, endpoints integration, error boundaries" },
+    { name: "RESTful API Integration", description: "Fetch/Axios, endpoint integration, error handling" },
+    { name: "Sanity CMS", description: "Structured content modelling and headless CMS integration" },
     { name: "Firebase", description: "Authentication, Firestore database, hosting" },
   ],
   stylingMotion: [
     { name: "Framer Motion", description: "Layout morphing, page transitions, gestures" },
     { name: "GSAP", description: "Timeline choreography, 3D cursor tracking lerp" },
     { name: "Radix UI", description: "100% accessible unstyled DOM primitives" },
-    { name: "CSS3 / HTML5", description: "Semantic markup, CSS Grid, Flexbox, custom variables" },
+    { name: "CSS", description: "CSS Grid, Flexbox, custom variables, responsive layouts" },
+    { name: "WordPress", description: "Content-managed websites and theme integration" },
+    { name: "Elementor", description: "WordPress page-building workflows and custom frontend work" },
   ],
   toolchain: [
     { name: "Git / GitHub", description: "Version control, branching, PR workflows" },
     { name: "Vite", description: "Fast local development, bundle building" },
-    { name: "Vercel / Netlify", description: "CI/CD static & serverless deployments" },
+    { name: "npm", description: "Package management, scripts, and dependency workflows" },
+    { name: "Vercel", description: "CI/CD, serverless deployments, and frontend hosting" },
+    { name: "Netlify", description: "Static hosting, deployments, and build automation" },
     { name: "VS Code", description: "Primary IDE, custom snippet workflows" },
   ],
   testing: [
@@ -952,7 +1039,6 @@ export const loadout = {
   ],
   securityIt: [
     { name: "IAM Workflows", description: "Role-based access, permission auditing" },
-    { name: "Google Cybersecurity", description: "Certified in threat detection, network security, risk management" },
   ],
 };
 

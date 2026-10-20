@@ -12,6 +12,8 @@ interface RollingTextButtonProps {
   id?: string;
   icon?: React.ReactNode;
   variant?: "primary" | "secondary" | "outline";
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 const transitionEase = [0.76, 0, 0.24, 1] as const;
@@ -24,6 +26,8 @@ export function RollingTextButton({
   id,
   icon,
   variant = "primary",
+  type = "button",
+  disabled = false,
 }: RollingTextButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
   const prefersReducedMotion = useReducedMotion();
@@ -144,7 +148,7 @@ export function RollingTextButton({
           onMouseLeave={() => setIsHovered(false)}
           onFocus={() => setIsHovered(true)}
           onBlur={() => setIsHovered(false)}
-          className={`${baseStyles} ${variantStyles} ${className}`}
+          className={`${baseStyles} ${variantStyles} ${disabled ? "pointer-events-none opacity-50" : ""} ${className}`}
         >
           {content}
         </a>
@@ -160,7 +164,7 @@ export function RollingTextButton({
         onMouseLeave={() => setIsHovered(false)}
         onFocus={() => setIsHovered(true)}
         onBlur={() => setIsHovered(false)}
-        className={`${baseStyles} ${variantStyles} ${className}`}
+        className={`${baseStyles} ${variantStyles} ${disabled ? "pointer-events-none opacity-50" : ""} ${className}`}
       >
         {content}
       </Link>
@@ -170,13 +174,14 @@ export function RollingTextButton({
   return (
     <button
       id={id}
-      type="button"
+      type={type}
+      disabled={disabled}
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onFocus={() => setIsHovered(true)}
       onBlur={() => setIsHovered(false)}
-      className={`${baseStyles} ${variantStyles} ${className}`}
+      className={`${baseStyles} ${variantStyles} ${disabled ? "pointer-events-none opacity-50" : ""} ${className}`}
     >
       {content}
     </button>

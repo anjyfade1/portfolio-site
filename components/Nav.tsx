@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useNavVisibility } from "./sections/NavVisibilityContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
@@ -14,6 +15,7 @@ const navLinks = [
 
 export function Nav() {
   const { theme, toggleTheme } = useTheme();
+  const { hidden } = useNavVisibility();
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -78,7 +80,7 @@ export function Nav() {
       `}</style>
 
       <header
-        className="fixed left-0 right-0 top-0 z-50 px-3 transition-all duration-500 md:px-5"
+        className={`fixed left-0 right-0 top-0 z-50 px-3 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:px-5 ${hidden ? '-translate-y-5 pointer-events-none opacity-0' : 'translate-y-0 opacity-100'}`}
         role="banner"
       >
         <div
