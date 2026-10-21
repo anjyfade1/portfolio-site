@@ -20,7 +20,7 @@ export default function AboutPage() {
           </div>
 
           <div className="py-10 md:py-14">
-            <h1 className="font-display text-[clamp(4.3rem,13vw,12rem)] font-extrabold leading-[0.76] tracking-[-0.075em] text-[var(--text-primary)]">
+            <h1 className="font-display text-[clamp(4.3rem,13vw,12rem)] font-light leading-[0.76] tracking-[-0.075em] text-[var(--text-primary)]">
               <TextWriter
                 text={"FRONTEND\nENGINEER"}
                 className="whitespace-pre-line"

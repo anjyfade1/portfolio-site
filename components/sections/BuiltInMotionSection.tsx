@@ -118,7 +118,7 @@ function StickyVideoSlide({
   }, [isActive]);
 
   const mediaFitClass =
-    demo.mediaFit === "contain" ? "object-contain" : "object-cover";
+    demo.mediaFit === "contain" ? "object-contain" : "object-contain md:object-cover";
   const projectNum = String(index + 1).padStart(2, "0");
 
   return (

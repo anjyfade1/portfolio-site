@@ -101,8 +101,8 @@ export function LoadoutInventory({ groups }: LoadoutInventoryProps) {
       const engine = Engine.create({ gravity: { x: 0, y: 1.05, scale: 0.001 } });
       const bounds = arena.getBoundingClientRect();
       const isCompact = bounds.width < 640;
-      const cardWidth = isCompact ? Math.min(152, bounds.width * 0.42) : 176;
-      const cardHeight = isCompact ? 86 : 104;
+      const cardWidth = isCompact ? 128 : 176;
+      const cardHeight = isCompact ? 74 : 104;
       const wallSize = 44;
 
       const floor = Bodies.rectangle(bounds.width / 2, bounds.height + wallSize / 2, bounds.width, wallSize, {
@@ -133,7 +133,7 @@ export function LoadoutInventory({ groups }: LoadoutInventoryProps) {
             friction: 0.62,
             frictionAir: 0.009,
             density: 0.0025,
-            chamfer: { radius: 14 },
+            chamfer: { radius: isCompact ? 12 : 14 },
           }
         );
 
@@ -232,15 +232,15 @@ export function LoadoutInventory({ groups }: LoadoutInventoryProps) {
               cardRefs.current[index] = element;
             }}
             role="listitem"
-            className={`absolute left-0 top-0 flex w-[calc(50%-0.5rem)] flex-col items-center justify-center gap-2 rounded-2xl border border-[var(--hairline)] bg-[var(--bg)]/90 p-3 text-center shadow-lg will-change-transform cursor-grab select-none active:cursor-grabbing md:w-44`}
+            className={`absolute left-0 top-0 flex min-h-[4.625rem] w-32 flex-col items-center justify-center gap-1.5 rounded-2xl border border-[var(--hairline)] bg-[var(--bg)]/90 p-2 text-center shadow-lg will-change-transform cursor-grab select-none active:cursor-grabbing md:min-h-[6.5rem] md:w-44 md:gap-2 md:p-3`}
             style={{ opacity: 0 }}
           >
             {(() => {
                 const tech = techIcons[item.name];
                 const Icon = tech?.Icon ?? SiCss;
-                return <Icon aria-hidden="true" className={`h-7 w-7 ${tech?.color ?? "text-[var(--accent)]"}`} />;
+                return <Icon aria-hidden="true" className={`h-5 w-5 md:h-7 md:w-7 ${tech?.color ?? "text-[var(--accent)]"}`} />;
               })()}
-              <h3 className="font-mono text-[10px] font-semibold tracking-tight text-[var(--text-primary)]">
+              <h3 className="font-mono text-[9px] font-semibold tracking-tight text-[var(--text-primary)] md:text-[10px]">
                 {item.name}
               </h3>
           </div>

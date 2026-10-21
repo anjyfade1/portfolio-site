@@ -23,9 +23,9 @@
   --color-ember-light: #d94a15;
 
   /* --- Fonts --- */
-  --font-display: "Space Grotesk", sans-serif;
-  --font-body: "Inter", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  --font-display: var(--font-poppins);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-inter);
 
   /* --- Fast Product Transitions --- */
   --animate-fade-up: fadeUp 0.3s cubic-bezier(0.33, 1, 0.68, 1) forwards;
@@ -50,9 +50,6 @@
    SEMANTIC TOKENS — Solid Dark (Primary) & Solid Light
    ============================================================ */
 :root {
-  --font-inter: "Inter", sans-serif;
-  --font-space: "Space Grotesk", sans-serif;
-  --font-jetbrains: "JetBrains Mono", monospace;
 
   /* Light Mode (Solid) */
   --bg: #faf9f6;
@@ -175,7 +172,7 @@ body {
   padding: 0.25rem 0.625rem;
   border-radius: 2px;
   font-size: 0.75rem;
-  font-family: var(--font-jetbrains);
+  font-family: var(--font-inter);
   letter-spacing: 0.04em;
   background-color: var(--bg-subtle);
   color: var(--text-secondary);
