@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
+  AnimatePresence,
   motion,
   useReducedMotion,
   useScroll,
@@ -30,244 +32,49 @@ type TechItem = {
 };
 
 const techs: TechItem[] = [
-  {
-    id: "react",
-    name: "React",
-    tooltip: "Frontend architecture & UI",
-    brandColor: "#61DAFB",
-    glowColor: "rgba(97, 218, 251, 0.4)",
-    size: 46,
-    position: { top: "18%", left: "12%" },
-    floatX: 6,
-    floatY: 8,
-    floatDuration: 6.5,
-    floatDelay: 0,
-  },
-  {
-    id: "typescript",
-    name: "TypeScript",
-    tooltip: "Type-safe application logic",
-    brandColor: "#3178C6",
-    glowColor: "rgba(49, 120, 198, 0.4)",
-    size: 40,
-    position: { top: "16%", left: "84%" },
-    floatX: -5,
-    floatY: 7,
-    floatDuration: 7.2,
-    floatDelay: 1.2,
-  },
-  {
-    id: "tailwind",
-    name: "Tailwind CSS",
-    tooltip: "Responsive UI & styling",
-    brandColor: "#38BDF8",
-    glowColor: "rgba(56, 189, 248, 0.4)",
-    size: 44,
-    position: { top: "48%", left: "8%" },
-    floatX: 5,
-    floatY: -6,
-    floatDuration: 6.8,
-    floatDelay: 0.8,
-  },
-  {
-    id: "nextjs",
-    name: "Next.js",
-    tooltip: "React framework & production apps",
-    brandColor: "#FFFFFF",
-    glowColor: "rgba(255, 255, 255, 0.35)",
-    size: 42,
-    position: { top: "45%", left: "88%" },
-    floatX: -6,
-    floatY: 8,
-    floatDuration: 7.8,
-    floatDelay: 1.6,
-  },
-  {
-    id: "gsap",
-    name: "GSAP",
-    tooltip: "Scroll interactions & animation",
-    brandColor: "#0AE448",
-    glowColor: "rgba(10, 228, 72, 0.4)",
-    size: 42,
-    position: { top: "78%", left: "14%" },
-    floatX: 7,
-    floatY: -8,
-    floatDuration: 6.2,
-    floatDelay: 0.4,
-  },
-  {
-    id: "react-query",
-    name: "React Query",
-    tooltip: "Server state & API data",
-    brandColor: "#FF4154",
-    glowColor: "rgba(255, 65, 84, 0.4)",
-    size: 40,
-    position: { top: "80%", left: "82%" },
-    floatX: -6,
-    floatY: -7,
-    floatDuration: 7.4,
-    floatDelay: 2.1,
-  },
-  {
-    id: "recharts",
-    name: "Recharts",
-    tooltip: "Dashboard data visualization",
-    brandColor: "#22C55E",
-    glowColor: "rgba(34, 197, 94, 0.4)",
-    size: 38,
-    position: { top: "14%", left: "50%" },
-    floatX: 4,
-    floatY: 6,
-    floatDuration: 8.0,
-    floatDelay: 1.0,
-    mobileHidden: true,
-  },
-  {
-    id: "chakra",
-    name: "Chakra UI",
-    tooltip: "Component systems & UI",
-    brandColor: "#319795",
-    glowColor: "rgba(49, 151, 149, 0.4)",
-    size: 38,
-    position: { top: "84%", left: "50%" },
-    floatX: -5,
-    floatY: 7,
-    floatDuration: 7.0,
-    floatDelay: 1.8,
-    mobileHidden: true,
-  },
-  {
-    id: "git",
-    name: "Git",
-    tooltip: "Version control & workflows",
-    brandColor: "#F05032",
-    glowColor: "rgba(240, 80, 50, 0.4)",
-    size: 38,
-    position: { top: "64%", left: "92%" },
-    floatX: -4,
-    floatY: -6,
-    floatDuration: 6.6,
-    floatDelay: 2.4,
-    mobileHidden: true,
-  },
+  { id: "saitama", name: "Saitama", tooltip: "One Punch Man", brandColor: "#ef4444", glowColor: "rgba(239, 68, 68, 0.42)", size: 48, position: { top: "18%", left: "12%" }, floatX: 6, floatY: 8, floatDuration: 6.5, floatDelay: 0 },
+  { id: "genos", name: "Genos", tooltip: "Incinerator Cannons", brandColor: "#f59e0b", glowColor: "rgba(245, 158, 11, 0.42)", size: 42, position: { top: "16%", left: "84%" }, floatX: -5, floatY: 7, floatDuration: 7.2, floatDelay: 1.2 },
+  { id: "shinra", name: "Shinra", tooltip: "Fire Force", brandColor: "#fb7185", glowColor: "rgba(251, 113, 133, 0.42)", size: 44, position: { top: "48%", left: "8%" }, floatX: 5, floatY: -6, floatDuration: 6.8, floatDelay: 0.8 },
+  { id: "erza", name: "Erza", tooltip: "Fairy Tail", brandColor: "#f43f5e", glowColor: "rgba(244, 63, 94, 0.42)", size: 44, position: { top: "45%", left: "88%" }, floatX: -6, floatY: 8, floatDuration: 7.8, floatDelay: 1.6 },
+  { id: "megumi", name: "Megumi", tooltip: "JJK", brandColor: "#64748b", glowColor: "rgba(100, 116, 139, 0.45)", size: 42, position: { top: "78%", left: "14%" }, floatX: 7, floatY: -8, floatDuration: 6.2, floatDelay: 0.4 },
+  { id: "tanjiro", name: "Tanjiro", tooltip: "Water-breathing Blade", brandColor: "#38bdf8", glowColor: "rgba(56, 189, 248, 0.42)", size: 42, position: { top: "80%", left: "82%" }, floatX: -6, floatY: -7, floatDuration: 7.4, floatDelay: 2.1 },
+  { id: "shadow", name: "Shadow", tooltip: "The Eminence in Shadow", brandColor: "#a78bfa", glowColor: "rgba(167, 139, 250, 0.45)", size: 40, position: { top: "14%", left: "50%" }, floatX: 4, floatY: 6, floatDuration: 8, floatDelay: 1, mobileHidden: true },
+  { id: "naruto", name: "Naruto", tooltip: "Glowing blue Rasengan", brandColor: "#60a5fa", glowColor: "rgba(96, 165, 250, 0.45)", size: 40, position: { top: "84%", left: "50%" }, floatX: -5, floatY: 7, floatDuration: 7, floatDelay: 1.8, mobileHidden: true },
+  { id: "zoro", name: "Zoro", tooltip: "One Piece", brandColor: "#34d399", glowColor: "rgba(52, 211, 153, 0.42)", size: 40, position: { top: "64%", left: "92%" }, floatX: -4, floatY: -6, floatDuration: 6.6, floatDelay: 2.4, mobileHidden: true },
 ];
+const characterArt: Record<string, string> = {
+  saitama: "/images/playground/characters/saitama-chibi.webp",
+  genos: "/images/playground/characters/genos-chibi.webp",
+  shinra: "/images/playground/characters/shinra-chibi.webp",
+  erza: "/images/playground/characters/erza-chibi.webp",
+  megumi: "/images/playground/characters/megumi-chibi.webp",
+  tanjiro: "/images/playground/characters/tanjiro-chibi.webp",
+  shadow: "/images/playground/characters/shadow-chibi.webp",
+  naruto: "/images/playground/characters/naruto-chibi.webp",
+  zoro: "/images/playground/characters/zoro-chibi.webp",
+};
 
 /* ═══════════════════════════════════════════════════════════════
    AUTHENTIC BRAND SVG ICONS
    ═══════════════════════════════════════════════════════════════ */
 
 function BrandLogoIcon({ id, size }: { id: string; size: number }) {
+  const common = { width: size, height: size, viewBox: "0 0 32 32", fill: "none" };
+
   switch (id) {
-    case "react":
-      return (
-        <svg width={size} height={size} viewBox="-11.5 -11.5 23 23" fill="none">
-          <circle r="2.05" fill="#61DAFB" />
-          <g stroke="#61DAFB" strokeWidth="1.1" fill="none">
-            <ellipse rx="10.5" ry="4.3" />
-            <ellipse rx="10.5" ry="4.3" transform="rotate(60)" />
-            <ellipse rx="10.5" ry="4.3" transform="rotate(120)" />
-          </g>
-        </svg>
-      );
-
-    case "typescript":
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-          <rect width="24" height="24" rx="4.5" fill="#3178C6" />
-          <path
-            d="M5 9h6v2.2H8.8V19H6.8V11.2H5V9zm7.2 4.9c.7-.6 1.7-1 2.8-1 1.2 0 2 .5 2 1.4 0 .9-.7 1.4-1.9 1.8l-.8.3c-1.6.5-2.5 1.4-2.5 2.7 0 1.9 1.5 3.1 3.7 3.1 1.4 0 2.5-.4 3.2-1l-.6-1.7c-.6.5-1.5.9-2.5.9-1.2 0-1.8-.5-1.8-1.3 0-.8.6-1.3 1.8-1.7l.8-.3c1.8-.6 2.6-1.5 2.6-2.8 0-1.9-1.4-3-3.5-3-1.3 0-2.3.4-3 .9l.7 1.8z"
-            fill="#FFFFFF"
-          />
-        </svg>
-      );
-
-    case "tailwind":
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-          <path
-            d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.046 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.335 6.182 14.955 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.557 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.335 13.382 8.955 12 6.001 12z"
-            fill="#38BDF8"
-          />
-        </svg>
-      );
-
-    case "nextjs":
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="11" fill="#000000" stroke="#444444" strokeWidth="1" />
-          <path
-            d="M15.4 16.5L9 8.2V16h1.8v-5.4l5.3 6.8c.4-.3.7-.6 1-.9h-.7z"
-            fill="#FFFFFF"
-          />
-          <rect x="14.8" y="8" width="1.8" height="5.5" fill="#FFFFFF" />
-        </svg>
-      );
-
-    case "gsap":
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-          <rect width="24" height="24" rx="5" fill="#111827" stroke="#0AE448" strokeWidth="1.2" />
-          <path
-            d="M10 8H6a2 2 0 00-2 2v4a2 2 0 002 2h4v-3H7.5v-2H10V8zm8 2.5c0-.8-.7-1.5-1.5-1.5h-3v3h2.5v1H13.5v2H17a1.5 1.5 0 001.5-1.5v-3z"
-            fill="#0AE448"
-          />
-        </svg>
-      );
-
-    case "react-query":
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="11" fill="#1C1917" stroke="#FF4154" strokeWidth="1" />
-          <circle cx="12" cy="6" r="2.8" fill="#FF4154" />
-          <circle cx="17.2" cy="9" r="2.8" fill="#FFB020" />
-          <circle cx="17.2" cy="15" r="2.8" fill="#00D8FF" />
-          <circle cx="12" cy="18" r="2.8" fill="#FF4154" />
-          <circle cx="6.8" cy="15" r="2.8" fill="#FFB020" />
-          <circle cx="6.8" cy="9" r="2.8" fill="#00D8FF" />
-          <circle cx="12" cy="12" r="1.8" fill="#FFFFFF" />
-        </svg>
-      );
-
-    case "recharts":
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-          <rect width="24" height="24" rx="4" fill="#0F172A" />
-          <rect x="4" y="14" width="3.5" height="6" rx="1" fill="#38BDF8" />
-          <rect x="9.5" y="9" width="3.5" height="11" rx="1" fill="#22C55E" />
-          <rect x="15" y="4" width="3.5" height="16" rx="1" fill="#F59E0B" />
-          <path d="M4 12L10.5 7L16 3" stroke="#FFFFFF" strokeWidth="1.2" strokeLinecap="round" />
-        </svg>
-      );
-
-    case "chakra":
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="11" fill="#1D283A" stroke="#319795" strokeWidth="1" />
-          <path
-            d="M12 5.5l5.2 9.2h-3.4l-1.8-3.4-1.8 3.4H7L12 5.5z"
-            fill="#319795"
-          />
-          <circle cx="12" cy="16.8" r="1.4" fill="#4FD1C5" />
-        </svg>
-      );
-
-    case "git":
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-          <path
-            d="M21.6 10.9L13.1 2.4c-.6-.6-1.5-.6-2.1 0L8.7 4.7l2.6 2.6c.6-.2 1.4-.1 1.9.4.5.5.7 1.3.4 1.9l2.5 2.5c.6-.2 1.4-.1 1.9.4.7.7.7 1.9 0 2.6s-1.9.7-2.6 0c-.6-.6-.7-1.4-.3-2.1L12.7 10v4.8c.2.1.4.3.6.5.7.7.7 1.9 0 2.6s-1.9.7-2.6 0-1.9-.7 0-2.6c.2-.2.5-.4.8-.5V9.7c-.3-.1-.6-.3-.8-.5-.6-.6-.7-1.4-.3-2.1L7.8 4.5 2.4 9.9c-.6.6-.6 1.5 0 2.1l8.5 8.5c.6.6 1.5.6 2.1 0l8.6-8.6c.6-.5.6-1.4 0-2z"
-            fill="#F05032"
-          />
-        </svg>
-      );
-
-    default:
-      return null;
+    case "saitama": return <svg {...common}><path d="M11 27 7 17l2-8 3 1 1-4h6l1 4 3-1 2 8-4 10H11Z" fill="#ef4444"/><path d="M11 16h10M13 20h2m2 0h2" stroke="#fff" strokeWidth="2" strokeLinecap="round"/></svg>;
+    case "genos": return <svg {...common}><path d="M7 9h18v14H7z" fill="#475569"/><path d="M10 6h4v20h-4zm8 0h4v20h-4z" fill="#94a3b8"/><circle cx="12" cy="16" r="3" fill="#f59e0b"/><circle cx="20" cy="16" r="3" fill="#f59e0b"/><circle cx="12" cy="16" r="1" fill="#fff7ed"/><circle cx="20" cy="16" r="1" fill="#fff7ed"/></svg>;
+    case "shinra": return <svg {...common}><path d="M16 3c4 5 7 8 7 14a7 7 0 1 1-14 0c0-4 3-8 7-14Z" fill="#fb7185"/><path d="M16 10c2.5 3 3.5 5 3.5 7.2a3.5 3.5 0 1 1-7 0c0-1.8 1-4.2 3.5-7.2Z" fill="#fef3c7"/><path d="m8 24 3-5m10 5-3-5" stroke="#fb7185" strokeWidth="2.5" strokeLinecap="round"/></svg>;
+    case "erza": return <svg {...common}><circle cx="16" cy="16" r="5" fill="#f43f5e"/><g stroke="#fecdd3" strokeWidth="2.5" strokeLinecap="round"><path d="M16 3v9M16 20v9M3 16h9m8 0h9M6.8 6.8l6.3 6.3m5.8 5.8 6.3 6.3M25.2 6.8l-6.3 6.3m-5.8 5.8-6.3 6.3"/></g></svg>;
+    case "megumi": return <svg {...common}><path d="M5 23c2-8 4-13 8-13l3 3 3-3c4 0 6 5 8 13l-5-2-3 5h-6l-3-5-5 2Z" fill="#64748b"/><path d="M12 16h.01M20 16h.01" stroke="#e2e8f0" strokeWidth="3" strokeLinecap="round"/><path d="M14 21h4" stroke="#e2e8f0" strokeWidth="1.8" strokeLinecap="round"/></svg>;
+    case "tanjiro": return <svg {...common}><path d="M7 25 25 7" stroke="#1f2937" strokeWidth="4" strokeLinecap="round"/><path d="m6 26 4-1-3-3-1 4Z" fill="#f43f5e"/><path d="M8 12c5-6 11-6 16-2-4 0-6 2-8 5-2 3-5 4-9 3 3-1 4-3 1-6Z" fill="#38bdf8" opacity=".9"/></svg>;
+    case "shadow": return <svg {...common}><path d="M7 25 24 8" stroke="#d8b4fe" strokeWidth="3" strokeLinecap="round"/><path d="M5 27c2-8 8-16 18-21-3 7-2 13 4 18-8 2-14 3-22 3Z" fill="#7c3aed" opacity=".65"/><circle cx="23" cy="9" r="3" fill="#c4b5fd"/></svg>;
+    case "naruto": return <svg {...common}><circle cx="16" cy="16" r="11" fill="#38bdf8" opacity=".28"/><path d="M7 16c4-7 14-7 18 0-4 7-14 7-18 0Zm4 0c2-3 8-3 10 0-2 3-8 3-10 0Z" stroke="#7dd3fc" strokeWidth="2"/><path d="M16 6c3 4 3 16 0 20M6 16c4 3 16 3 20 0" stroke="#e0f2fe" strokeWidth="1.5" strokeLinecap="round"/></svg>;
+    case "zoro": return <svg {...common}><g stroke="#34d399" strokeWidth="3" strokeLinecap="round"><path d="M6 25 25 6M5 17 21 8M11 27 27 11"/></g><g stroke="#ecfdf5" strokeWidth="1.3"><path d="m8 23 3 3m8-18 3 3m-14 4 3 3"/></g></svg>;
+    default: return null;
   }
 }
-
-/* ═══════════════════════════════════════════════════════════════
-   SUSPENDED LIQUID-GLASS FLOATING LOGO
+/* Suspended anime and manga motif
    ═══════════════════════════════════════════════════════════════ */
 
 function SuspendedLogo({
@@ -410,18 +217,15 @@ function SuspendedLogo({
    STATIONARY PROGRESSIVE SCROLL-REVEAL WORD
    ═══════════════════════════════════════════════════════════════ */
 
-const QUOTE_WORDS = [
-  "\"There",
-  "is",
-  "no",
-  "mountain",
-  "anywhere;",
-  "every",
-  "man's",
-  "ignorance",
-  "is",
-  "his",
-  "mountain\"",
+const QUOTES = [
+  {
+    words: ["\"There", "is", "no", "mountain", "anywhere;", "every", "man's", "ignorance", "is", "his", "mountain\""],
+    attribution: "Bishop David Oyedepo",
+  },
+  {
+    words: ["\"A", "man", "who", "is", "moved", "from", "within", "cannot", "be", "stopped", "from", "outside", "except", "he", "stops", "himself", "from", "within.\""],
+    attribution: "Mr Richard (GNCC)",
+  },
 ];
 
 function ScrollWord({
@@ -469,8 +273,17 @@ export function PlaygroundSection() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
   const [activeTech, setActiveTech] = useState<string | null>(null);
+  const activeCharacterArt = activeTech ? characterArt[activeTech] : null;
+  const [quoteIndex, setQuoteIndex] = useState(0);
   const reducedMotion = useReducedMotion() ?? false;
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Pick once per home-page visit, then keep the quote stable while scrolling.
+  useEffect(() => {
+    setQuoteIndex(Math.floor(Math.random() * QUOTES.length));
+  }, []);
+
+  const quote = QUOTES[quoteIndex];
 
   // Scroll Progress across the section for word-by-word reveal
   const { scrollYProgress } = useScroll({
@@ -523,7 +336,7 @@ export function PlaygroundSection() {
       }}
       onClick={() => setActiveTech(null)}
       className="relative isolate w-full min-h-[540px] sm:min-h-[600px] md:min-h-[680px] flex items-center justify-center overflow-hidden my-0 transition-all duration-500"
-      aria-label="Philosophy and Tech Loadout Surface"
+      aria-label="Philosophy and anime interests"
       style={glassStyle}
     >
       {/* ── Interactive Cursor Spotlight Light Sheen ── */}
@@ -579,11 +392,35 @@ export function PlaygroundSection() {
       />
 
       {/* ── CENTER STATIONARY PROGRESSIVE SCROLL-REVEAL QUOTE ── */}
+      {/* Character collectible revealed by the active floating token */}
+      <AnimatePresence mode="wait">
+        {activeCharacterArt && activeTech && (
+          <motion.div
+            key={activeTech}
+            className="pointer-events-none absolute inset-y-0 right-0 z-[1] w-full overflow-hidden"
+            initial={{ opacity: 0, x: 32, scale: 0.96 }}
+            animate={{ opacity: 0.34, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 20, scale: 0.98 }}
+            transition={{ duration: reducedMotion ? 0 : 0.45, ease: "easeOut" }}
+            aria-hidden="true"
+          >
+            <div className="absolute inset-y-0 right-0 w-full sm:w-[62%]">
+              <Image
+                src={activeCharacterArt}
+                alt=""
+                fill
+                sizes="(max-width: 640px) 100vw, 62vw"
+                className="object-contain object-right"
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className="relative z-10 mx-auto max-w-3xl lg:max-w-4xl px-6 sm:px-8 text-center pointer-events-none select-none">
         <h2 className="font-display font-medium sm:font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-[3rem] tracking-tight leading-[1.35] sm:leading-[1.28] flex flex-wrap justify-center gap-x-[0.32em] gap-y-[0.12em]">
-          {QUOTE_WORDS.map((word, i) => {
-            const start = (i / QUOTE_WORDS.length) * 0.78;
-            const end = start + 0.78 / QUOTE_WORDS.length;
+          {quote.words.map((word, i) => {
+            const start = (i / quote.words.length) * 0.78;
+            const end = start + 0.78 / quote.words.length;
             return (
               <ScrollWord
                 key={`${word}-${i}`}
@@ -602,11 +439,11 @@ export function PlaygroundSection() {
           style={reducedMotion ? {} : { opacity: attributionOpacity }}
           className="mt-6 md:mt-8 font-mono text-xs sm:text-sm uppercase tracking-[0.22em] text-[var(--accent)] font-medium"
         >
-          — Bishop David Oyedepo
+          {quote.attribution}
         </motion.p>
       </div>
 
-      {/* ── SUSPENDED BRAND TECH ICONS FLOATING IN GLASS ── */}
+      {/* ── SUSPENDED ANIME COLLECTIBLES FLOATING IN GLASS ── */}
       {techs.map((tech) => (
         <SuspendedLogo
           key={tech.id}

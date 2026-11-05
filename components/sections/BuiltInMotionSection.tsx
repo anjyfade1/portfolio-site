@@ -123,7 +123,7 @@ function StickyVideoSlide({
 
   return (
     <motion.div
-      className="absolute inset-0 flex flex-col"
+      className="absolute inset-0 flex items-center justify-center md:block"
       style={Object.assign(
         { zIndex: index },
         reducedMotion
@@ -133,7 +133,7 @@ function StickyVideoSlide({
     >
       {/* Video container */}
       <div
-        className="relative flex-1 overflow-hidden rounded-2xl border bg-[#0d0c0b] transition-[border-color,box-shadow] duration-500"
+        className="relative aspect-video w-full flex-none overflow-hidden bg-[#0d0c0b] transition-[border-color,box-shadow] duration-500 md:h-full md:aspect-auto md:flex-1 md:rounded-2xl md:border"
         style={{
           borderColor: isActive ? demo.accent : "var(--hairline)",
           boxShadow: isActive
